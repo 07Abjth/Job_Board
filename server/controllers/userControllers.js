@@ -7,72 +7,67 @@ import userModel from '../models/userModel.js';
 export const registerUser = async (req, res) => {
   try {
     const { name, email, password, confirmPassword, role, profilePic } = req.body;
-
+    
     if (!name || !email || !password || !confirmPassword || !role) {
       return res.status(400).json({ success: false, message: 'All fields are required' });
     }
-
+    
     if (password !== confirmPassword) {
       return res.status(400).json({ success: false, message: 'Passwords do not match' });
     }
-
+    
     if (role === "employer") {
       return res.status(400).json({ success: false, message: "Use employer registration instead." });
     }
-
+    
     const userExists = await User.findOne({ email });
     if (userExists) {
       return res.status(400).json({ success: false, message: 'User already exists' });
     }
-
+    
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ name, email, password: hashedPassword, role, profilePic });
-
+    
     await newUser.save();
-    const token = generateToken(newUser._id, newUser.role);
-
+    
+    // Fix here - pass res and the complete user object
+    const token = generateToken(res, newUser);
+    
     return res.status(201).json({ success: true, message: 'User registered successfully', token });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
- 
 
 // ✅ Login user and Store Token in HTTP-Only Cookie
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-
+    
     if (!email || !password) {
       return res.status(400).json({ success: false, message: "Email and password are required" });
     }
-
+    
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ success: false, message: "Invalid credentials" });
     }
-
+    
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ success: false, message: "Invalid credentials" });
     }
-
-    const token = generateToken(user._id, user.role);
-
-    // ✅ Store token in HTTP-only cookie
-    res.cookie("token", token, {
-      httpOnly: true, // Prevents JavaScript access (XSS protection)
-      secure: process.env.NODE_ENV === "production", // Enable secure cookies in production
-      sameSite: "Strict", // Prevents CSRF attacks
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days expiration
-    });
-
-    res.status(200).json({ success: true, message: "Login successful" });
+    
+    // This will set the "jwt" cookie for you
+    const token = generateToken(res, user);
+    
+    // No need to manually set cookies here
+    
+    res.status(200).json({ success: true, message: "Login successful", token });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-
   
   
 

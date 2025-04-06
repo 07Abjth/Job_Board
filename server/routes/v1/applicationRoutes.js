@@ -13,9 +13,9 @@ router.post("/apply-job", authMiddleware, applyForJob);
 router.get("/job/:jobId", authMiddleware, getJobApplications);
 
 // ✅ Get Applications Submitted by a Job Seeker
-router.get("/user", authUser, getUserApplications);
+router.get("/user", authMiddleware, getUserApplications);
 
 // ✅ Update Application Status (Employer)
-router.put("/:applicationId/status", authUser, updateApplicationStatus);
+router.put("/:applicationId/status",  authMiddleware, updateApplicationStatus);
 
 export default router;

@@ -16,7 +16,7 @@ export const createJob = async (req, res) => {
       location,
       salary,
       category,
-      employer: req.user.id, // ✅ Employer ID is set from authenticated user
+      employer: req.user.id, // Employer ID is set from authenticated user
     });
 
     await job.save();
