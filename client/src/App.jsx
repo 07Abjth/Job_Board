@@ -1,26 +1,18 @@
-   import './App.css'
-   import React from 'react'
-   import { DarkMode } from './components/shared/DarkMode'
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes/Routes";
+import React from "react";
+import { Toaster } from "react-hot-toast";
 
-
-function App() {
- 
+const App = () => {
+  
   return (
-    <>
-<h1 className="bg-blue-500 text-white p-4 text-2xl font-bold rounded-lg">
-  wasupp
-</h1>
-
-<DarkMode/>
- <button className="btn btn-neutral">Neutral</button>
-<button className="btn btn-primary">Primary</button>
-<button className="btn btn-accent">Accent</button>
-<button className="btn btn-info">Info</button>
-<button className="btn btn-success">Success</button>
-<button className="btn btn-warning">Warning</button>
-<button className="btn btn-error">Error</button>
-    </>
+  <>
+   <RouterProvider router={router} />
+   <Toaster />
+  </>
   )
-}
+};
 
-export default App
+export default App;
+
+
