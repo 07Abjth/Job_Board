@@ -9,8 +9,7 @@ import {ErrorPage} from '../pages/shared/ErrorPage'
 import { ProtectedRoutes } from './ProtectedRoutes'
 import { JobDetails } from '../pages/user/JobDetails'
 import { JobList } from '../pages/user/JobList'
-import { PostJob } from '../pages/user/PostJob'
-import { UserDashboard } from '../pages/user/UserDashboard'
+ import { UserDashboard } from '../pages/user/UserDashboard'
 
 export const router = createBrowserRouter([
 
@@ -24,28 +23,16 @@ export const router = createBrowserRouter([
           { path: "login", element: <LoginPage /> },
           { path: "job-list", element: <JobList /> },
           { path: "job-details", element: <JobDetails /> },
-          { path: "post-job", element: <PostJob /> },
           { path: "saved-jobs", element: <SavedJobs /> },
           { path: "user-dashboard", element: <UserDashboard /> },
-
-
-        //   { path: "contact", element: <Contact /> },
-        //   { path: "about", element: <About /> },
-        //   { path: "course-details-page/:id", element: <CourseDetailsPage /> },
-        //   { path: "course-page", element: <CoursePage /> },
-         
+ 
           
           //Protected Routes
           {
             element: <ProtectedRoutes />,
             path: "user",
             children: [
-          { path: "wishlist", element: <SavedJobs /> },
-        //   { path: "create-course-page", element: <CreateCoursePage/> },
-        //   { path: "profile", element: <Profile /> },
-        //   { path: "my-learnings", element: <MyLearnings /> },
-        //   { path: "cart", element: <Cart /> },
-        //   { path: "order", element:  <h1>order page</h1> },
+          { path: "wishlist", element: <SavedJobs /> }, 
         ],
            
         },
