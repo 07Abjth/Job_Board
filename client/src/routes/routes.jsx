@@ -10,6 +10,7 @@ import { ProtectedRoutes } from './ProtectedRoutes'
 import { JobDetails } from '../pages/user/JobDetails'
 import { JobList } from '../pages/user/JobList'
  import { UserDashboard } from '../pages/user/UserDashboard'
+import { ApplyForm } from '../pages/user/ApplyForm'
 
 export const router = createBrowserRouter([
 
@@ -23,16 +24,18 @@ export const router = createBrowserRouter([
           { path: "login", element: <LoginPage /> },
           { path: "job-list", element: <JobList /> },
           { path: "job-details", element: <JobDetails /> },
-          { path: "saved-jobs", element: <SavedJobs /> },
-          { path: "user-dashboard", element: <UserDashboard /> },
  
           
           //Protected Routes
           {
-            element: <ProtectedRoutes />,
+            // element: <ProtectedRoutes />,
             path: "user",
             children: [
-          { path: "wishlist", element: <SavedJobs /> }, 
+          { path: "saved-job", element: <SavedJobs /> }, 
+          { path: "user-dashboard", element: <UserDashboard /> },
+          { path: "apply-form", element: <ApplyForm /> },
+
+
         ],
            
         },

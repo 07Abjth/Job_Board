@@ -8,7 +8,7 @@ export const JobList = () => {
 
   const fetchJobs = async () => {
     try {
-      const response = await axiosInstance.get('/jobs'); // adjust URL
+      const response = await axiosInstance.get('/job/get-all-jobs');  
       setJobs(response.data?.jobs || []);
     } catch (error) {
       console.error('Error fetching jobs:', error);
@@ -31,7 +31,7 @@ export const JobList = () => {
           <div key={job._id} className="p-4 border rounded shadow-sm">
             <h3 className="text-lg font-bold">{job.title}</h3>
             <p>{job.company} — {job.location}</p>
-            <Link to={`/jobs/${job._id}`} className="text-blue-500 hover:underline">View Details</Link>
+            <Link to={`/job-list/${job._id}`} className="text-blue-500 hover:underline">View Details</Link>
           </div>
         ))}
       </div>
