@@ -8,7 +8,9 @@ export const JobList = () => {
 
   const fetchJobs = async () => {
     try {
-      const response = await axiosInstance.get('/job/get-all-jobs');  
+      const response = await axiosInstance.get('/jobs/get-all-jobs');  
+      console.log("Fetched jobs data:", response.data);
+
       setJobs(response.data?.jobs || []);
     } catch (error) {
       console.error('Error fetching jobs:', error);

@@ -95,3 +95,17 @@ export const deleteJob = async (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
+
+// getLatestJobs
+export const getLatestJobs = async (req, res) => {
+  try {
+    const latestJobs = await Job.find({})
+      .sort({ createdAt: -1 }) // Sort by the 'createdAt' field in descending order (newest first)
+      .limit(10); // Limit the number of latest jobs to retrieve (adjust as needed)
+
+    res.status(200).json({ success: true, jobs: latestJobs });
+  } catch (error) {
+    console.error('Error fetching latest jobs:', error);
+    res.status(500).json({ success: false, error: 'Failed to fetch latest jobs' });
+  }
+};

@@ -27,6 +27,8 @@ export const Footer = () => {
   <form>
     <h6 className="footer-title">Newsletter</h6>
     <fieldset className="w-80">
+    <h3 className="text-2xl font-semibold mb-4">📬 Get Job Alerts</h3>
+    <p className="mb-6 text-gray-600">Never miss a job opportunity again!</p>
       <label>Enter your email address</label>
       <div className="join">
         <input
