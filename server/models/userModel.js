@@ -5,7 +5,18 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, enum: ['user','employer', 'admin'], required: true },
-  profilePic: { type: String, default: 'https://www.example.com/default-profile.png' }, // Optional
+
+    // Optional fields
+
+  profilePic: { type: String, default: 'https://www.example.com/default-profile.png' },  
+  resume: { type: String },
+  workExperience: { type: [String], default: [] },
+  education: { type: [String], default: [] },
+  skills: { type: [String], default: [] },
+  interests: { type: [String], default: [] },
+  phone: { type: String },
+  preferredLocations: { type: [String], default: [] },
+
 
   // Fields for Job Seekers
   resume: { type: String }, // Resume URL (uploaded file)

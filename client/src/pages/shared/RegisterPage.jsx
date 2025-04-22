@@ -1,8 +1,10 @@
 import { useState } from "react";
 import React from 'react'
+import { Navigate } from "react-router-dom";
 
 
 export const RegisterPage = () => {
+  
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,7 +20,10 @@ export const RegisterPage = () => {
     e.preventDefault();
     // You can replace this with an actual API call
     console.log("Form Submitted:", formData);
+    
   };
+  Navigate("/login", { replace: true });
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">

@@ -16,7 +16,7 @@ v1Router.use('/jobs', jobRoutes);
  v1Router.use('/company', companyRoutes);
  v1Router.use('/application', applicationRoutes);
  v1Router.use('/rating', ratingRoutes);
- v1Router.use('/bookmarks', bookmarkRoutes);
+ v1Router.use('/bookmark', bookmarkRoutes);
 
 
 

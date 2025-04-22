@@ -21,13 +21,13 @@ export const LoginPage = ({ role ="user" }) => {
 
     signup_route: "/signup",
   };
-      
-  if (role === "mentor") {
-    user.role = "mentor";
-    user.login_api = "/mentor/login";
-    user.profile_route = "/mentor/profile";
-    user.home_route = "/mentor";  
-    user.signup_route = "/mentor-signup";
+       
+  if (role === "employer") {
+    user.role = "employer";
+    user.login_api = "/employer/login";
+    user.profile_route = "/employer/profile";
+    user.home_route = "/employer";  
+    user.signup_route = "/employer/signup";
   }
 
   console.log(user, "====user");
@@ -36,7 +36,7 @@ export const LoginPage = ({ role ="user" }) => {
   const onSubmit = async (data) => {
     try {
       console.log(data, "====data");
-      const response = await axiosInstance.post(user.login_api, data); // ✅ Fix: Correct API call
+      const response = await axiosInstance.post(user.login_api, data);  
       console.log(response, "====response");
       toast.success("Login successful");
       navigate(user.home_route);

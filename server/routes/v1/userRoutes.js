@@ -7,20 +7,20 @@ import authMiddleware from '../../middlewares/authMiddleware.js';
  
 const router = express.Router();
 
-router.post('/register', upload.single('profilePic'), registerUser);
+router.post('/register',authMiddleware, upload.single('profilePic'), registerUser);
 router.post('/login', loginUser);
 router.get('/get-users', getUsers);
 
 router.post("/check-user", authMiddleware, checkUser);
 
 
-// ✅ Get logged-in user's profile
-router.get("/profile", authUser, getUserProfile);
+//   Get logged-in user's profile
+router.get("/profile", authMiddleware, getUserProfile);
 
 // ✅ Get specific user profile by ID (Only for admins)
-router.get("/get-user-profile/:id", authAdmin, getUserProfileById);
+router.get("/get-user-profile/:id", authMiddleware, getUserProfileById);
 
-router.patch('/update', authUser,  updateUser);
+router.patch('/update', authMiddleware,  updateUser);
 router.post('/logout',authMiddleware, logoutUser);
 
 export default router;

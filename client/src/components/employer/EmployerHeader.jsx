@@ -1,40 +1,77 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { DarkMode } from "../shared/DarkMode"; // Assuming DarkMode toggle is shared
+import { DarkMode } from "../shared/DarkMode";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { clearEmployerData } from "../../redux/features/employerSlice";
+import { axiosInstance } from "../../config/axiosInstance";
+import toast from "react-hot-toast";
 
-export const EmployerHeader = () => {
+
+ 
+
+  
+  
+  export const EmployerHeader = () => {
+
+    const dispatch = useDispatch();  
+    const navigate = useNavigate();
+  
+    const handleEmployerLogout = async () => {
+      try {
+        await axiosInstance.post("/employer/logout");
+        localStorage.removeItem("employerToken");
+  
+        dispatch(clearEmployerData());
+        toast.success("Logged out successfully");
+  
+        navigate("/employer/login");
+        window.location.reload();
+      } catch (error) {
+        console.error("Employer logout failed:", error);
+        toast.error("Logout failed. Try again.");
+      }
+    };
+  
+  
   return (
-    <header className="bg-blue-600 text-white p-4 shadow-md">
-      <div className="container mx-auto flex justify-between items-center">
-        {/* Logo / Branding */}
-        <Link to="/employer/dashboard" className="text-2xl font-bold">
-          Employer Portal
-        </Link>
-
-        {/* Navigation Links */}
-        <nav className="space-x-6">
-          <Link to="/employer/dashboard" className="hover:text-gray-200">
-            Dashboard
-          </Link>
-          <Link to="/employer/job-management" className="hover:text-gray-200">
-            Manage Jobs
-          </Link>
-          <Link to="/employer/candidates" className="hover:text-gray-200">
-            Candidates
-          </Link>
-          <Link to="/employer/profile" className="hover:text-gray-200">
-            Profile
-          </Link>
-        </nav>
-
-        {/* Dark Mode Toggle */}
-        <DarkMode />
-
-        {/* Logout Button */}
-        <button className="bg-red-500 px-4 py-2 rounded hover:bg-red-600 transition">
+    <div className="navbar bg-base-100 shadow-sm">
+    <div className="navbar-start">
+      <div className="dropdown">
+        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" /> </svg>
+        </div>
+        <ul
+          tabIndex={0}
+          className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                <button onClick={handleEmployerLogout} className="btn btn-sm btn-error text-white">
           Logout
         </button>
+          <li><a>About</a></li>
+        </ul>
       </div>
-    </header>
+    </div>
+    <div className="navbar-center">
+      <a className="btn btn-ghost text-xl">Talent Hiring</a>
+    </div>
+    <div className="navbar-end">
+      <button className="btn btn-ghost btn-circle">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /> </svg>
+      </button>
+      <div>
+                {/* Dark Mode Toggle */}
+                  <DarkMode />
+        
+      </div>
+      <button className="btn btn-ghost btn-circle">
+        <div className="indicator">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /> </svg>
+          <span className="badge badge-xs badge-primary indicator-item"></span>
+        </div>
+      </button>
+
+      <br />
+
+    </div>
+  </div>
   );
 };

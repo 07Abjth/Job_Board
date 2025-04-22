@@ -1,19 +1,32 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-export const ErrorPage = () => {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen text-center px-4">
-      <h1 className="text-6xl font-bold text-red-600">404</h1>
-      <h2 className="text-2xl font-semibold mt-4">Oops! Page not found</h2>
-      <p className="text-gray-500 mt-2 mb-6">
+export const ErrorPage = ({role = "user"}) => {
+  
+  
+  const url = {
+    home:"/",
+  }
+
+  if (role == "employer"){
+    url.home = "/employer/dashboard"
+  }
+  
+const navigate = useNavigate()
+
+  return ( 
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-800">
+      <h1 className="text-6xl font-bold text-red-500 mb-4">404</h1>
+      <h2 className="text-3xl font-semibold mb-2">Oops! Page Not Found</h2>
+      <p className="text-gray-600 mb-6 text-center">
         The page you're looking for doesn't exist or has been moved.
       </p>
+      <h2 onClick={()=> navigate(url.home)}>Go to Home</h2>
       <Link
         to="/"
-        className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+        className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition"
       >
-        Go Back Home
+        
       </Link>
     </div>
   );

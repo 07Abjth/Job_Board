@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
- import { JobCard } from './user/JobCard';
+ import { JobCard } from './user/cards/JobCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getLatestJobs } from '../services/jobApi'; // Import the API function
 import {
@@ -8,7 +8,7 @@ import {
    faBuilding,
    faClock,
  } from '@fortawesome/free-solid-svg-icons';
-
+ 
 export const HomePage = () => {
   const [latestJobs, setLatestJobs] = useState([]);
   const [loadingLatest, setLoadingLatest] = useState(true);
@@ -171,6 +171,7 @@ export const HomePage = () => {
           </Link>
         </div>
       </section>
+ 
 
       {/* Why Choose Us (Example Section) */}
       <section className="py-8 bg-gray-50 rounded-lg shadow-md mb-12">

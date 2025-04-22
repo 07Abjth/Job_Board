@@ -8,7 +8,7 @@ import { clearUserData, saveUserData } from "../../redux/features/userSlice";
 import { PublicHeader } from "../public/PublicHeader"; // Adjust the import path as necessary
 
 export const UserLayout = () => {
-  // ✅ Correct use of useSelector
+  //   use of useSelector
   const { isUserAuth, userData } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -31,7 +31,7 @@ export const UserLayout = () => {
   };
   
 
-  // ✅ Use useEffect correctly
+  //  useEffect 
   useEffect(() => {
     checkUser();
   }, [location.pathname]);

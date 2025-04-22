@@ -2,6 +2,7 @@ import User from '../models/userModel.js';
 import bcrypt from 'bcrypt';
 import generateToken from '../utils/generateToken.js';
 import userModel from '../models/userModel.js';
+import { cloudinaryInstance } from '../config/cloudinaryConfig.js';
 
 //  Register a Job Seeker
 export const registerUser = async (req, res) => {
@@ -25,8 +26,27 @@ export const registerUser = async (req, res) => {
       return res.status(400).json({ success: false, message: 'User already exists' });
     }
     
+console.log(req.file, "=====file");
+
+
+// Validate image upload
+if (!req.file) {
+  return res.status(400).json({ success: false, message: 'ProfilePic image is required' });
+}
+
+let cloudinaryResult;
+try {
+  cloudinaryResult = (await cloudinaryInstance.uploader.upload(req.file.path)).url;
+  console.log(cloudinaryResult, "=====cloudinaryResult");
+  
+} catch (err) {
+  console.error('Cloudinary upload error:', err);
+  return res.status(500).json({ success: false, message: 'Image upload failed' });
+}
+
+    
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ name, email, password: hashedPassword, role, profilePic });
+    const newUser = new User({ name, email, password: hashedPassword, role, profilePic:  cloudinaryResult });
     
     await newUser.save();
     
@@ -100,21 +120,52 @@ export const getUserProfileById = async (req, res) => {
 };
 
 
-//1️Get logged-in user's profile (No ID needed)
+//Get logged-in user's profile (No ID needed)
+
 export const getUserProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id).select("-password"); // ✅ Use `req.user._id`
-
-    if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
+    // Ensure the user is logged in and is a standard user
+    if (!req.user || req.user.role !== 'user') {
+      return res.status(403).json({
+        success: false,
+        message: 'Unauthorized. Only users can access this route.',
+      });
     }
 
-    return res.status(200).json({ success: true, user });
+    const user = await User.findById(req.user.id).select("-password");
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        resume: user.resume,
+        workExperience: user.workExperience,
+        education: user.education,
+        skills: user.skills,
+        interests: user.interests,
+        profilePic: user.profilePic,
+        phone: user.phone,
+        preferredLocations: user.preferredLocations,
+      },
+    });
   } catch (error) {
-    return res.status(500).json({ success: false, message: error.message });
+    console.error("Error in getUserProfile:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
   }
 };
-
 
  
 

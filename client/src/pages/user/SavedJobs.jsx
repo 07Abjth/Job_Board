@@ -1,36 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { axiosInstance } from '../../config/axiosInstance';
-import { JobCard } from '../user/JobCard';
+import { JobCard } from '../user/cards/JobCard';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
 export const SavedJobs = () => {
   const [jobDetails, setJobDetails] = useState([]);
-  console.log('Job Details:', jobDetails);
-  
   const [loading, setLoading] = useState(true);
 
-  // Get bookmarked jobs from localStorage
-  const getBookmarkIds = () => {
-    const bookmarks = localStorage.getItem('bookmarkedJobs');
-    console.log('Bookmarks:', bookmarks);
-    
-    return bookmarks ? Object.entries(JSON.parse(bookmarks)) : [];
-  };
-console.log('Bookmark IDs:', getBookmarkIds());
-
-  const fetchJobsByBookmarkIds = async () => {
+  // Fetch bookmarked jobs and their full details
+  const fetchUserBookmarks = async () => {
     try {
       setLoading(true);
-      const bookmarksArray = getBookmarkIds(); // [ [jobId, bookmarkId], ... ]
+      const { data } = await axiosInstance.get('/bookmark/saved');
+      const bookmarks = data.bookmarks || [];  // ensure bookmarks is an array
+      
+      if (bookmarks.length === 0) {
+        // If no bookmarks exist, we can directly handle this case without API errors
+        setJobDetails([]);
+        return; // Exit the function early
+      }
 
-      const jobs = await Promise.all(
-        bookmarksArray.map(async ([jobId, bookmarkId]) => {
+      const jobsWithDetails = await Promise.all(
+        bookmarks.map(async ({ jobId, _id }) => {
           try {
-            const res = await axiosInstance.get(`/jobs/${jobId}`);
+            const { data: jobData } = await axiosInstance.get(`/jobs/${jobId}`);
             return {
-              job: res.data.job,
-              bookmarkId,
+              job: jobData.job,
+              bookmarkId: _id,
             };
           } catch (err) {
             console.warn(`Could not fetch job with ID ${jobId}`);
@@ -39,17 +36,17 @@ console.log('Bookmark IDs:', getBookmarkIds());
         })
       );
 
-      setJobDetails(jobs.filter(Boolean));
+      setJobDetails(jobsWithDetails.filter(Boolean)); // Remove any nulls
     } catch (err) {
+      console.error('Error fetching bookmarks:', err);
       toast.error('Failed to load saved jobs.');
-      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchJobsByBookmarkIds();
+    fetchUserBookmarks();
   }, []);
 
   const handleBookmarkRemoved = (jobIdToRemove) => {

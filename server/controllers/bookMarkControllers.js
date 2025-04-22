@@ -2,37 +2,32 @@ import Bookmark from "../models/bookmarkModel.js";
 
 
 export const createBookmark = async (req, res) => {
-    try {
-      const { jobId } = req.body;
-      const userId = req.user.id; // Make sure req.user is set from your auth middleware
-  
-      const bookmark = new Bookmark({
-        user: userId,
-        jobId,
-      });
-  
-      await bookmark.save();
-  
-      res.status(201).json({ success: true, bookmark });
-    } catch (error) {
-      console.error("Error creating bookmark:", error);
-      res.status(500).json({ success: false, message: "Internal Server Error" });
-    }
+  try {
+    const { jobId } = req.body;
+    console.log(`Received jobId: ${jobId}`);
+    
+    const userId = req.user._id;
+    console.log(`User ID from token: ${userId}`);
+    
+
+    const newBookmark = await Bookmark.create({ userId, jobId });
+
+    res.status(201).json({ success: true, bookmark: newBookmark });
+  } catch (error) {
+    console.error('Error saving bookmark:', error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
   };
   
 
 
   export const getBookmarks = async (req, res) => {
     try {
-        const userId = req.user.id;
-      const { bookmarkId } = req.params;
-
+      const userId = req.user.id;
   
-      const bookmarks = await Bookmark.find({ _id: bookmarkId,
-        user: userId  })
-        .populate('job') // Populate the 'job' field to get job details
+      const bookmarks = await Bookmark.find({ user: userId })
+        .populate('jobId') // if `jobId` is a reference in your model
         .exec();
-        
   
       res.status(200).json({ success: true, bookmarks });
     } catch (error) {
