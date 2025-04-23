@@ -20,10 +20,10 @@ app.use(cookieParser()); // ✅ Enables cookie parsing
 
   
 
-// ✅ CORS Configuration
+//  CORS Configuration
 app.use(cors({
-  origin: "http://localhost:5173",
-  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],  
+  origin: ["http://localhost:5173", "https://talent-hiring-client.vercel.app"],
+  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
   credentials: true,
 }));
 
