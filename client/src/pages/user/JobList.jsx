@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
- import { axiosInstance } from '../../config/AxiosInstance';
+ import { axiosInstance } from '../../config/axiosInstance';
 
 export const JobList = () => {
   const [jobs, setJobs] = useState([]);
