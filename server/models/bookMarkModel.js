@@ -10,13 +10,11 @@ const bookmarkSchema = new mongoose.Schema(
     jobId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Job',
-      required: true,
+      required: true, // make true if every bookmark should be linked to a job
     },
   },
   { timestamps: true }
 );
-
-// Prevent duplicate bookmarks by same user for the same job
-bookmarkSchema.index({ user: 1, jobId: 1 }, { unique: true });
+ 
 
 export default mongoose.model("Bookmark", bookmarkSchema);

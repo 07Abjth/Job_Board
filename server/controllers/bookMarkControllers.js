@@ -1,4 +1,4 @@
-import Bookmark from "../models/bookmarkModel.js";
+import Bookmark from "../models/bookMarkModel.js";
 
 
 export const createBookmark = async (req, res) => {
