@@ -48,9 +48,9 @@ export const ApplyForm = () => {
     }
   }, [jobId]);
 
-  const handleChange = (e) => {
-    //   existing handleChange logic ...
-  };
+  // const handleChange = (e) => {
+  //   //   existing handleChange logic ...
+  // };
 
   const validateForm = () => {
     //   existing validation logic ...
@@ -71,10 +71,12 @@ export const ApplyForm = () => {
       try {
         //   API call to submit the application ...
       } catch (error) {
+        console.error('Error submitting application:', error);
         // ... error handling ...
       }
     }
   };
+
 
   if (loading) {
     return <div>Loading job details...</div>;

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
- import { JobCard } from './user/cards/JobCard';
+import { JobCard } from './user/cards/JobCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getLatestJobs } from '../services/jobApi'; // Import the API function
 import {
   faBriefcase,
-   faBuilding,
-   faClock,
- } from '@fortawesome/free-solid-svg-icons';
- 
+  faBuilding,
+  faClock,
+} from '@fortawesome/free-solid-svg-icons';
+
 export const HomePage = () => {
   const [latestJobs, setLatestJobs] = useState([]);
   const [loadingLatest, setLoadingLatest] = useState(true);
@@ -27,7 +27,6 @@ export const HomePage = () => {
         setLatestJobs(data?.jobs || []);
       } catch (error) {
         console.error('Error in HomePage fetching latest jobs:', error);
-        // Optionally set an error state here
       } finally {
         setLoadingLatest(false);
       }
@@ -36,29 +35,30 @@ export const HomePage = () => {
     fetchLatestJobsData();
   }, []);
 
+  useEffect(() => {
+    // Temporary dummy data for job types
+    const dummyJobTypes = ['Full-time', 'Part-time', 'Internship', 'Contract'];
+    setJobTypes(dummyJobTypes); // Set the dummy job types for now
+  }, []);
+
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
-    // Implement search filtering logic here or on the backend
   };
 
   const handleCategoryChange = (event) => {
     setCategoryFilter(event.target.value);
-    // Implement category filtering logic here or on the backend
   };
 
   const handleLocationChange = (event) => {
     setLocationFilter(event.target.value);
-    // Implement location filtering logic here or on the backend
   };
 
   const handleJobTypeChange = (type) => {
     setSelectedJobTypes((prev) =>
       prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
     );
-    // Implement job type filtering logic here or on the backend
   };
 
-  
   return (
     <div className="px-4 py-8 max-w-7xl mx-auto">
       {/* Hero Section with Search */}
@@ -82,7 +82,6 @@ export const HomePage = () => {
             Search Jobs
           </Link>
         </div>
-        {/* More specific search options can be added here */}
       </section>
 
       {/* Filters (Example - can be expanded) */}
@@ -93,10 +92,8 @@ export const HomePage = () => {
             <label htmlFor="category" className="mr-2 text-gray-700">Category:</label>
             <select id="category" className="border rounded-md py-2 px-3 focus:outline-none" value={categoryFilter} onChange={handleCategoryChange}>
               <option value="">All Categories</option>
-              {/* Fetch categories from backend and map here */}
               <option value="IT">Information Technology</option>
               <option value="Marketing">Marketing</option>
-              {/* ... more categories */}
             </select>
           </div>
           <div>
@@ -128,7 +125,6 @@ export const HomePage = () => {
               </div>
             </div>
           )}
-          {/* More filters like salary range can be added here */}
         </div>
       </section>
 
@@ -155,12 +151,11 @@ export const HomePage = () => {
         ) : latestJobs.length === 0 ? (
           <p>No latest jobs posted yet.</p>
         ) : (
-<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-  {latestJobs.map((job) => (
-    <JobCard key={job._id} job={job} />
-  ))}
-</div>
-
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {latestJobs.map((job) => (
+              <JobCard key={job._id} job={job} />
+            ))}
+          </div>
         )}
         <div className="text-center mt-6">
           <Link
@@ -171,7 +166,6 @@ export const HomePage = () => {
           </Link>
         </div>
       </section>
- 
 
       {/* Why Choose Us (Example Section) */}
       <section className="py-8 bg-gray-50 rounded-lg shadow-md mb-12">
@@ -199,8 +193,6 @@ export const HomePage = () => {
           </div>
         </div>
       </section>
-
-    
     </div>
   );
 };

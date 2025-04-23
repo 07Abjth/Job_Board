@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { axiosInstance } from '../../config/AxiosInstance';
+import { axiosInstance } from '../../config/axiosInstance';
 
 export const JobDetails = () => {
   const { id } = useParams();
