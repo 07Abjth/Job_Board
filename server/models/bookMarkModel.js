@@ -10,7 +10,7 @@ const bookmarkSchema = new mongoose.Schema(
     jobId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Job',
-      required: true, // make true if every bookmark should be linked to a job
+      required: true,
     },
   },
   { timestamps: true }

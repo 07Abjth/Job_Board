@@ -1,79 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  faBriefcase,
-  faMapMarkerAlt,
-  faBuilding,
-  faTag,
-  faMoneyBillWave,
-  faBookmark,
-  faTrash,
-} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Bookmark as BookmarkIcon } from "lucide-react";
-import { Bookmark as BookmarkOutlineIcon } from "lucide-react";
-import { axiosInstance } from '../../../config/axiosInstance';
-import { toast } from 'react-toastify';
+import { faBuilding, faMapMarkerAlt, faTag, faMoneyBillWave } from '@fortawesome/free-solid-svg-icons';
+import  {Bookmark}  from '../BookMarks'; // Adjust the import path as necessary
 
-export const JobCard = ({ job, userBookmarks = [], onBookmarkRemove, onBookmarkAdd }) => {
-  console.log("JobCard job:", job);
-  console.log("JobCard userBookmarks:", userBookmarks);
-    console.log("JobCard onBookmarkRemove:", onBookmarkRemove);
-  console.log("JobCard onBookmarkAdd:", onBookmarkAdd);
-    
-  
-  const [isBookmarked, setIsBookmarked] = useState(false);
-  const [bookmarkId, setBookmarkId] = useState(null);
-
-  useEffect(() => {
-    const found = userBookmarks.find(bookmark => bookmark.jobId === job._id);
-    if (found) {
-      setIsBookmarked(true);
-      setBookmarkId(found._id);
-    } else {
-      setIsBookmarked(false);
-      setBookmarkId(null);
-    }
-  }, [job._id, userBookmarks]);
-
-  const handleBookmarkToggle = async () => {
-    try {
-      if (isBookmarked) {
-        if (!bookmarkId) {
-          console.error("Trying to delete a bookmark, but bookmarkId is null");
-          return;
-        }
-        await axiosInstance.delete(`/bookmark/${bookmarkId}`);
-        setIsBookmarked(false);
-        setBookmarkId(null);
-        toast.success('Job removed from saved jobs');
-        if (onBookmarkRemove) {
-          onBookmarkRemove(job._id);
-        }
-      } else {
-        const response = await axiosInstance.post('/bookmark/save', { jobId: job._id });
-        setIsBookmarked(true);
-        setBookmarkId(response.data.bookmark._id);
-        toast.success('Job saved to your list');
-        if (onBookmarkAdd) {
-          onBookmarkAdd(response.data.bookmark);
-        }
-      }
-    } catch (error) {
-      console.error('Error toggling bookmark:', error);
-      if (error.response && error.response.status === 404 && isBookmarked) {
-        setIsBookmarked(false);
-        setBookmarkId(null);
-        toast.info('Bookmark was already removed from the database.');
-        if (onBookmarkRemove) {
-          onBookmarkRemove(job._id);
-        }
-      } else {
-        toast.error('Failed to update saved jobs');
-      }
-    }
-  };
-
+export const JobCard = ({ job, userBookmarks = [], onBookmarkAdd, onBookmarkRemove }) => {
   return (
     <div className="relative border p-4 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 bg-white group">
       <div className="flex items-center mb-4">
@@ -129,14 +60,12 @@ export const JobCard = ({ job, userBookmarks = [], onBookmarkRemove, onBookmarkA
         <Link to={`/job-details/${job._id}`} className="text-sm text-blue-600 hover:underline hover:text-blue-700 transition">
           View Details
         </Link>
-        <button
-          onClick={handleBookmarkToggle}
-          className={`p-1 rounded-full transition ${
-            isBookmarked ? 'text-red-500' : 'text-gray-400'
-          } hover:text-red-600 focus:outline-none`}
-        >
-          <FontAwesomeIcon icon={isBookmarked ? faTrash : faBookmark} className="h-5 w-5" />
-        </button>
+        <Bookmark
+          job={job}
+          userBookmarks={userBookmarks}
+          onBookmarkAdd={onBookmarkAdd}
+          onBookmarkRemove={onBookmarkRemove}
+        />
       </div>
     </div>
   );

@@ -4,37 +4,41 @@ import Bookmark from "../models/bookmarkModel.js";
 export const createBookmark = async (req, res) => {
   try {
     const { jobId } = req.body;
-    console.log(`Received jobId: ${jobId}`);
     
-    const userId = req.user._id;
-    console.log(`User ID from token: ${userId}`);
+    if (!req.user) {
+      return res.status(400).json({ message: 'User not authenticated' });
+    }
     
+    // Change req.user._id to req.user.id to match your token structure
+    const bookmark = new Bookmark({
+      jobId: jobId,
+      user: req.user.id
+    });
 
-    const newBookmark = await Bookmark.create({ userId, jobId });
-
-    res.status(201).json({ success: true, bookmark: newBookmark });
+    await bookmark.save();
+    res.status(201).json({ message: 'Bookmark saved successfully', bookmark });
   } catch (error) {
     console.error('Error saving bookmark:', error);
-    res.status(500).json({ success: false, message: 'Internal Server Error' });
+    res.status(500).json({ message: 'Error saving bookmark' });
   }
-  };
+};
   
 
 
-  export const getBookmarks = async (req, res) => {
-    try {
-      const userId = req.user.id;
-  
-      const bookmarks = await Bookmark.find({ user: userId })
-        .populate('jobId') // if `jobId` is a reference in your model
-        .exec();
-  
-      res.status(200).json({ success: true, bookmarks });
-    } catch (error) {
-      console.error("Error fetching bookmarks:", error);
-      res.status(500).json({ success: false, message: "Internal Server Error" });
-    }
-  };
+export const getBookmarks = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const bookmarks = await Bookmark.find({ user: userId })
+      .populate('jobId') // Make sure 'jobId' matches your model field name
+      .exec();
+
+    res.status(200).json({ success: true, bookmarks });
+  } catch (error) {
+    console.error("Error fetching bookmarks:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
   
   export const removeBookmark = async (req, res) => {
     try {
