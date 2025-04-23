@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import userReducer from './features/UserSlice'
-import employerReducer from "./features/EmployerSlice";
+import {userReducer} from './features/UserSlice.js'
+import {employerReducer} from "./features/EmployerSlice.js";
 
 
 
