@@ -23,7 +23,7 @@ export const HomePage = () => {
     const fetchLatestJobsData = async () => {
       setLoadingLatest(true);
       try {
-        const data = await getLatestJobs();
+        const data = await getLatestJobs();  // Fetch jobs without login
         setLatestJobs(data?.jobs || []);
       } catch (error) {
         console.error('Error in HomePage fetching latest jobs:', error);
@@ -31,9 +31,10 @@ export const HomePage = () => {
         setLoadingLatest(false);
       }
     };
-
+  
     fetchLatestJobsData();
   }, []);
+  
 
   useEffect(() => {
     // Temporary dummy data for job types

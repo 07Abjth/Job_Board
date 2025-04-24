@@ -4,11 +4,11 @@ import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { axiosInstance } from "../../config/axiosInstance";
 
-export const LoginPage = ({ role ="user" }) => {
+export const LoginPage = ({ role = "user" }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors }, // ✅ Fix: Destructure errors
+    formState: { errors },
   } = useForm();
   const navigate = useNavigate();
 
@@ -18,30 +18,42 @@ export const LoginPage = ({ role ="user" }) => {
     login_api: "/user/login",
     profile_route: "/user/profile",
     home_route: "/",
-
     signup_route: "/signup",
   };
-       
+
   if (role === "employer") {
     user.role = "employer";
     user.login_api = "/employer/login";
     user.profile_route = "/employer/profile";
-    user.home_route = "/employer";  
+    user.home_route = "/employer";
     user.signup_route = "/employer/signup";
   }
 
-  console.log(user, "====user");
+  console.log("====USER ROLE CONFIG====", user);
 
   // ✅ Login function
   const onSubmit = async (data) => {
     try {
-      console.log(data, "====data");
-      const response = await axiosInstance.post(user.login_api, data);  
-      console.log(response, "====response");
+      console.log("📨 Login Data:", data);
+      console.log("🔗 Login API URL:", user.login_api);
+
+      const response = await axiosInstance.post(user.login_api, data);
+
+      console.log("✅ Login Success Response:", response.data);
       toast.success("Login successful");
       navigate(user.home_route);
     } catch (error) {
-      console.error(error);
+      console.error("❌ Login Error:", error);
+
+      if (error.response) {
+        console.error("📦 Backend responded with error:", error.response.data);
+        console.error("📊 Status code:", error.response.status);
+      } else if (error.request) {
+        console.error("📭 No response received from backend", error.request);
+      } else {
+        console.error("🛠️ Axios error message:", error.message);
+      }
+
       toast.error(error.response?.data?.message || "Login failed");
     }
   };
@@ -67,7 +79,10 @@ export const LoginPage = ({ role ="user" }) => {
           <label className="block text-sm font-medium text-gray-700">Password</label>
           <input
             type="password"
-            {...register("password", { required: "Password is required", minLength: { value: 6, message: "Password must be at least 6 characters" } })}
+            {...register("password", {
+              required: "Password is required",
+              minLength: { value: 6, message: "Password must be at least 6 characters" },
+            })}
             placeholder="Enter your password"
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
           />
@@ -76,7 +91,10 @@ export const LoginPage = ({ role ="user" }) => {
 
         {/* Login Button */}
         <div className="flex items-center justify-between">
-          <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition">
+          <button
+            type="submit"
+            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition"
+          >
             Log In
           </button>
         </div>
