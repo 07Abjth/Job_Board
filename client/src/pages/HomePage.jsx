@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { JobCard } from './user/cards/JobCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getLatestJobs } from '../services/jobApi'; // Import the API function
+import { getLatestJobs } from '../services/jobApi';  
 import {
   faBriefcase,
   faBuilding,

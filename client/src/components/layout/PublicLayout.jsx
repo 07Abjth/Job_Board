@@ -10,7 +10,7 @@ export const PublicLayout = () => {
       <div>
         <Outlet />
       </div>
-      <Footer /> {/* Or a different PublicFooter */}
+      <Footer />  
     </>
   );
 };

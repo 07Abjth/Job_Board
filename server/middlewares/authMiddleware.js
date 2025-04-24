@@ -7,8 +7,8 @@ const authMiddleware = (req, res, next) => {
       return res.status(401).json({ message: "No token provided" });
     }
 
-    console.log("🔹 Token received from cookie:", token);
-    console.log("🔹 JWT_SECRET used for verification:", process.env.JWT_SECRET);
+    // console.log("🔹 Token received from cookie:", token);
+    // console.log("🔹 JWT_SECRET used for verification:", process.env.JWT_SECRET);
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET, { algorithms: ["HS256"] });
     
