@@ -2,8 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import {dbConnect}  from "./config/dbConfig.js";
-import apiRouter from "./routes/index.js";
+import v1Router from "./routes/v1/index.js"; 
 import cookieParser from "cookie-parser";
+import apiRouter from "./routes/index.js";
  
 
 // Load environment variables
@@ -42,7 +43,8 @@ app.use((req, res, next) => {
 dbConnect();
 
 // ✅ API Versioning
-app.use("/api", apiRouter);
+app.use('/api', apiRouter);
+// app.use("/api/v1", v1Router); // Mount v1 router
 
 // ✅ Sample Route
 app.get("/", (req, res) => {
