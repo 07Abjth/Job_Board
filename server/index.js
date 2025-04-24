@@ -16,7 +16,7 @@ const app = express();
 
 // ✅ Middleware
 app.use(express.json()); // Parses incoming JSON requests
-app.use(cookieParser()); // ✅ Enables cookie parsing
+app.use(cookieParser()); //  Enables cookie parsing
 
   
 
