@@ -8,6 +8,7 @@ import {
   faBuilding,
   faClock,
 } from '@fortawesome/free-solid-svg-icons';
+import { axiosInstance } from '../config/axiosInstance';
 
 export const HomePage = () => {
   const [latestJobs, setLatestJobs] = useState([]);
@@ -59,6 +60,24 @@ export const HomePage = () => {
       prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
     );
   };
+
+// Add this to a main component that makes API calls
+useEffect(() => {
+  // Test backend connection
+  const testBackendConnection = async () => {
+    try {
+      console.log("Testing backend connection...");
+      // Use a real endpoint instead of just '/'
+      const response = await axiosInstance.get('/get-latest-jobs');
+      console.log("Backend connection successful:", response.data);
+    } catch (error) {
+      console.error("Backend connection failed:", error);
+      console.error("Error details:", error.response?.data || error.message);
+    }
+  };
+  
+  testBackendConnection();
+}, []);
 
   return (
     <div className="px-4 py-8 max-w-7xl mx-auto">
