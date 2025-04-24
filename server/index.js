@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import {dbConnect}  from "./config/dbConfig.js";
-import v1Router from "./routes/v1/index.js";
+import apiRouter from "./routes/index.js";
 import cookieParser from "cookie-parser";
  
 
@@ -42,7 +42,7 @@ app.use((req, res, next) => {
 dbConnect();
 
 // ✅ API Versioning
-app.use("/api/v1", v1Router);
+app.use("/api", apiRouter);
 
 // ✅ Sample Route
 app.get("/", (req, res) => {
