@@ -9,7 +9,7 @@ export const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  // Add timeout to catch connection issues
-  timeout: 10000
+  // // Add timeout to catch connection issues
+  // timeout: 10000
 });
 
