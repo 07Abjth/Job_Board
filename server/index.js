@@ -15,21 +15,30 @@ dotenv.config();
 // Initialize express app
 const app = express(); 
 
+//  CORS Configuration
+// Place this at the very top of your Express app, before any other middleware
+const corsOptions = {
+  origin: [
+    "http://localhost:5173",
+    "https://talent-hiring-client.vercel.app",
+    "https://talent-hiring-client-h3ktqfy6a-abhijith-bss-projects.vercel.app"
+  ],
+  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+  credentials: true,
+  maxAge: 86400 // Cache preflight requests for 24 hours
+};
+
+app.use(cors(corsOptions));
+
+
 // ✅ Middleware
 app.use(express.json()); // Parses incoming JSON requests
 app.use(cookieParser()); //  Enables cookie parsing
 
   
 
-//  CORS Configuration
-app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://talent-hiring-client.vercel.app",
-   ],
-  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
-  credentials: true
-}));
+
+// Make sure no route is registered before this middleware
 
 
 
