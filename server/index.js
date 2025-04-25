@@ -24,22 +24,21 @@ app.use(cookieParser()); //  Enables cookie parsing
 //  CORS Configuration
 app.use(cors({
   origin: [
-    
-    "http://localhost:5173", 
+    "http://localhost:5173",
     "https://talent-hiring-client.vercel.app",
-    "https://talent-hiring-client-h3ktqfy6a-abhijith-bss-projects.vercel.app"  // Add this new domain
-  ],
+   ],
   methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
-  credentials: true,
+  credentials: true
 }));
 
 
-// Add this before your routes to ensure cookies work cross-domain
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Origin', req.headers.origin);
-  next();
-});
+
+// // Add this before your routes to ensure cookies work cross-domain
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Credentials', true);
+//   res.header('Access-Control-Allow-Origin', req.headers.origin);
+//   next();
+// });
 
 // ✅ Connect to MongoDB
 dbConnect();
