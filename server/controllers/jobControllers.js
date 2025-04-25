@@ -98,10 +98,13 @@ export const deleteJob = async (req, res) => {
 
 // getLatestJobs
 export const getLatestJobs = async (req, res) => {
+  console.log('🔥 getLatestJobs called');
+
   try {
     const latestJobs = await Job.find({})
       .sort({ createdAt: -1 }) // Sort by the 'createdAt' field in descending order (newest first)
       .limit(10); // Limit the number of latest jobs to retrieve (adjust as needed)
+      console.log('🔥 getLatestJobs called');
 
     res.status(200).json({ success: true, jobs: latestJobs });
   } catch (error) {

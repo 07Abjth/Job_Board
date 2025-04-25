@@ -22,15 +22,17 @@ app.use(cookieParser()); //  Enables cookie parsing
   
 
 //  CORS Configuration
-// Update your CORS configuration
 app.use(cors({
-  origin: ["http://localhost:5173", "https://talent-hiring-client.vercel.app"],
+  origin: [
+    
+    "http://localhost:5173", 
+    "https://talent-hiring-client.vercel.app",
+    "https://talent-hiring-client-h3ktqfy6a-abhijith-bss-projects.vercel.app"  // Add this new domain
+  ],
   methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
   credentials: true,
-  // Add these options for better cookie handling
-  exposedHeaders: ["set-cookie"],
-  allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 
 // Add this before your routes to ensure cookies work cross-domain
 app.use((req, res, next) => {
