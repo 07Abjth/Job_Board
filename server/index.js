@@ -37,10 +37,6 @@ app.use(cookieParser()); //  Enables cookie parsing
 
   
 
-
- 
-
-
 // Add this before your routes to ensure cookies work cross-domain
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Credentials', true);

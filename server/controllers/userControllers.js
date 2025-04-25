@@ -187,12 +187,12 @@ export const updateUser = async (req, res) => {
 
 
  // Log out a user
-export const logoutUser = (req, res) => {
+ export const logoutUser = (req, res) => {
   try {
     res.cookie('jwt', '', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
       expires: new Date(0)
     });
     res.json({ success: true, message: "User logged out successfully" });
@@ -200,6 +200,7 @@ export const logoutUser = (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
+
 
 
 
