@@ -1,13 +1,16 @@
 import express from "express";
  
- import { applyForJob, getJobApplications, getUserApplications, updateApplicationStatus } from "../../controllers/applicationControllers.js";
+ import { applyForJob, getAppliedJobs, getJobApplications, getUserApplications, updateApplicationStatus } from "../../controllers/applicationControllers.js";
 import authUser from "../../middlewares/authUser.js";
 import authMiddleware from "../../middlewares/authMiddleware.js";
+import { upload } from "../../middlewares/upload.js";
 
 const router = express.Router();
 
 // ✅ Apply for a Job (Job Seeker)
-router.post("/apply-job", authMiddleware, applyForJob);
+router.post("/:id/apply", authMiddleware,  upload.single('resume'), applyForJob);
+
+router.get("/applied", authMiddleware, getAppliedJobs);
 
 // ✅ Get All Applications for a Job (Employer)
 router.get("/job/:jobId", authMiddleware, getJobApplications);

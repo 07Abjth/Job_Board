@@ -7,7 +7,7 @@ import authMiddleware from '../../middlewares/authMiddleware.js';
  
 const router = express.Router();
 
-router.post('/register',authMiddleware, upload.single('profilePic'), registerUser);
+router.post('/register', upload.single('profilePic'), registerUser);
 router.post('/login', loginUser);
 router.get('/get-users', getUsers);
 

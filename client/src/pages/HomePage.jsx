@@ -162,7 +162,7 @@ export const HomePage = () => {
         )}
         <div className="text-center mt-6">
           <Link
-            to="/job-list"
+            to="/subscription"
             className="text-blue-600 font-semibold hover:underline"
           >
             View all jobs →

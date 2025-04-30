@@ -6,6 +6,8 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   role: { type: String, enum: ['user','employer', 'admin'], required: true },
 
+
+
     // Optional fields
 
   profilePic: { type: String, default: 'https://www.example.com/default-profile.png' },  
@@ -17,6 +19,8 @@ const userSchema = new mongoose.Schema({
   phone: { type: String },
   preferredLocations: { type: [String], default: [] },
 
+  // Fields for subscription
+  isSubscribed: { type: Boolean, default: false },
 
   // Fields for Job Seekers
   resume: { type: String }, // Resume URL (uploaded file)

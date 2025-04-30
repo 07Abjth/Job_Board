@@ -1,14 +1,33 @@
 import Job from '../models/jobModel.js';
-
+ 
 // ✅ Create a New Job (Employer Only)
 export const createJob = async (req, res) => {
   try {
+    // Check if the user is an employer
     if (req.user.role !== 'employer') {
       return res.status(403).json({ success: false, message: 'Only employers can post jobs' });
     }
 
-    const { title, description, company, location, salary, category } = req.body;
+    // Destructure the required fields from the request body
+    const {
+      title,
+      description,
+      company,
+      location,
+      salary,
+      category,
+      jobType,
+      experience,
+      qualifications,
+      requirements,
+    } = req.body;
 
+    // Check if all necessary fields are provided
+    if (!title || !description || !company || !location || !salary || !category || !jobType || !experience || !qualifications || !requirements) {
+      return res.status(400).json({ success: false, message: 'Please provide all required fields' });
+    }
+
+    // Create a new job document
     const job = new Job({
       title,
       description,
@@ -16,15 +35,24 @@ export const createJob = async (req, res) => {
       location,
       salary,
       category,
-      employer: req.user.id, // Employer ID is set from authenticated user
+      jobType,
+      experience,
+      qualifications,
+      requirements,
+      employer: req.user.id, // Employer ID is set from the authenticated user
     });
 
+    // Save the job to the database
     await job.save();
+
+    // Return success response
     return res.status(201).json({ success: true, message: 'Job created successfully', job });
   } catch (error) {
+    console.error("Error creating job:", error);
     return res.status(500).json({ success: false, message: error.message });
   }
 };
+
 
 
 // ✅ Get All Jobs (Public)

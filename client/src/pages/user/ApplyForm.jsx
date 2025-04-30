@@ -1,107 +1,143 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { axiosInstance } from '../../config/axiosInstance.js';  
+import { useParams, useNavigate } from 'react-router-dom';
+import { axiosInstance } from '../../config/axiosInstance';
 
 export const ApplyForm = () => {
-  const { jobId } = useParams();
-  const [jobDetails, setJobDetails] = useState(null);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    resume: null,
-    coverLetter: '',
-    jobId: jobId, // Include the jobId in the form data
-    jobTitle: '', // To potentially display on the form
-    companyName: '', // To potentially display on the form
-  });
-  const [loading, setLoading] = useState(true);
+  const { id } = useParams(); // job id
+  const navigate = useNavigate();
+
+  const [job, setJob] = useState(null);
+  const [applicantName, setApplicantName] = useState('');
+  const [applicantEmail, setApplicantEmail] = useState('');
+  const [coverLetter, setCoverLetter] = useState('');
+  const [resume, setResume] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  // ... other state variables for form handling and validation
+
+  // Fetch the job details for displaying job title, etc.
+  const fetchJobDetails = async () => {
+    try {
+      const response = await axiosInstance.get(`/jobs/${id}`);
+      setJob(response.data?.job);
+    } catch (error) {
+      console.error('Error fetching job details:', error);
+      setError('Unable to fetch job details.');
+    }
+  };
 
   useEffect(() => {
-    const fetchJobDetails = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await axiosInstance.get(`/jobs/get-job/${jobId}`);
-        if (response.data?.job) {
-          setJobDetails(response.data.job);
-          setFormData(prevState => ({
-            ...prevState,
-            jobTitle: response.data.job.title || '',
-            companyName: response.data.job.company || '',
-          }));
-        } else {
-          setError('Job details not found.');
-        }
-      } catch (err) {
-        console.error('Error fetching job details:', err);
-        setError('Failed to fetch job details.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (jobId) {
-      fetchJobDetails();
-    }
-  }, [jobId]);
-
-  // const handleChange = (e) => {
-  //   //   existing handleChange logic ...
-  // };
-
-  const validateForm = () => {
-    //   existing validation logic ...
-  };
+    fetchJobDetails();
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      //   existing handleSubmit logic ...
-      const formDataToSend = new FormData();
-      formDataToSend.append('name', formData.name);
-      formDataToSend.append('email', formData.email);
-      formDataToSend.append('phone', formData.phone);
-      formDataToSend.append('resume', formData.resume);
-      formDataToSend.append('coverLetter', formData.coverLetter);
-      formDataToSend.append('jobId', formData.jobId); // Send the jobId to the backend
-
-      try {
-        //   API call to submit the application ...
-      } catch (error) {
-        console.error('Error submitting application:', error);
-        // ... error handling ...
+  
+    if (!applicantName || !applicantEmail || !coverLetter || !resume) {
+      setError('Please fill all fields and upload a resume.');
+      return;
+    }
+  
+    setLoading(true);
+    setError(null);
+  
+    try {
+      const formData = new FormData();
+      formData.append('jobId', id); // <-- IMPORTANT
+      formData.append('coverLetter', coverLetter);
+      formData.append('resume', resume);
+  
+      const response = await axiosInstance.post(`/application/${id}/apply`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+  
+      if (response.status === 201) {
+        alert('Application submitted successfully!');
+        navigate('/');
+      } else {
+        setError('Failed to submit application. Please try again.');
       }
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      setError('An error occurred. Please try again later.');
+    } finally {
+      setLoading(false);
     }
   };
-
-
-  if (loading) {
-    return <div>Loading job details...</div>;
+  
+  if (error) {
+    return <p className="text-center text-red-600">{error}</p>;
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
+  if (!job) {
+    return <p className="text-center text-gray-600">Loading job details...</p>;
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8">
-      <h2 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-white">
-        Apply for {jobDetails?.title || 'this Job'} at {jobDetails?.company || 'this Company'}
-      </h2>
-      {/*   form fields, displaying job details ... */}
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        {/*   form inputs ... */}
-        <input type="hidden" name="jobId" value={formData.jobId} /> {/* Hidden field to ensure jobId is sent */}
-        <div className="flex items-center justify-end">
+    <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md mt-8">
+      <button
+        onClick={() => navigate(-1)}
+        className="text-blue-600 hover:underline mb-6 flex items-center"
+      >
+        &larr; Back
+      </button>
+
+      <h2 className="text-3xl font-bold text-gray-800 mb-6">Apply for {job.title}</h2>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label className="block text-gray-700 font-semibold mb-2">Full Name</label>
+          <input
+            type="text"
+            value={applicantName}
+            onChange={(e) => setApplicantName(e.target.value)}
+            className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:border-blue-500"
+            placeholder="Your full name"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-gray-700 font-semibold mb-2">Email Address</label>
+          <input
+            type="email"
+            value={applicantEmail}
+            onChange={(e) => setApplicantEmail(e.target.value)}
+            className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:border-blue-500"
+            placeholder="you@example.com"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-gray-700 font-semibold mb-2">Cover Letter</label>
+          <textarea
+            value={coverLetter}
+            onChange={(e) => setCoverLetter(e.target.value)}
+            className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:border-blue-500"
+            placeholder="Write a short cover letter..."
+            rows="6"
+            required
+          ></textarea>
+        </div>
+
+        <div>
+          <label className="block text-gray-700 font-semibold mb-2">Upload Resume (PDF only)</label>
+          <input
+            type="file"
+            accept=".pdf"
+            onChange={(e) => setResume(e.target.files[0])}
+            className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:border-blue-500"
+            required
+          />
+        </div>
+
+        <div className="flex justify-center">
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            disabled={loading} // Disable button while loading
+            disabled={loading}
+            className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all disabled:opacity-50"
           >
-            {/* ... */}
+            {loading ? 'Submitting...' : 'Submit Application'}
           </button>
         </div>
       </form>
