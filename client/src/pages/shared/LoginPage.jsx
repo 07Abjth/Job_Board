@@ -1,8 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
+
 import { toast } from "react-hot-toast";
 import { axiosInstance } from "../../config/axiosInstance";
+import { useDispatch } from "react-redux";
+import { saveUserData } from "../../redux/features/userSlice";
 
 export const LoginPage = ({ role = "user" }) => {
   const {
@@ -11,6 +14,7 @@ export const LoginPage = ({ role = "user" }) => {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+  const dispatch = useDispatch(); // Initialize dispatch here
 
   // ✅ User roles setup
   const user = {
@@ -36,10 +40,14 @@ export const LoginPage = ({ role = "user" }) => {
     try {
       console.log("📨 Login Data:", data);
       console.log("🔗 Login API URL:", user.login_api);
-
+      
       const response = await axiosInstance.post(user.login_api, data);
-
+      
       console.log("✅ Login Success Response:", response.data);
+      
+      // Dispatch user data to Redux store directly after login success
+      dispatch(saveUserData(response.data));
+      
       toast.success("Login successful");
       navigate(user.home_route);
     } catch (error) {
