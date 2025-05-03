@@ -11,7 +11,7 @@ export const AboutPage = () => {
 
       <div className="space-y-6 text-gray-600">
         <p>
-          At <span className="font-semibold">[Your Website Name]</span>, we are dedicated to connecting ambitious individuals
+          At <span className="font-semibold">Talent Hiring</span>, we are dedicated to connecting ambitious individuals
           with companies that value their talent. Our platform makes job searching and hiring simple, fast, and reliable.
         </p>
 

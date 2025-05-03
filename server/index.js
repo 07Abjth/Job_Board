@@ -20,6 +20,8 @@ const app = express();
 const corsOptions = {
   origin: [
     "http://localhost:5173",
+    "http://localhost:5174",
+
     "https://talent-hiring-client.vercel.app",
     "https://talent-hiring-client-h3ktqfy6a-abhijith-bss-projects.vercel.app"
   ],

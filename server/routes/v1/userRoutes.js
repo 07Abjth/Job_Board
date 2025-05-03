@@ -1,5 +1,5 @@
 import express from 'express';
-import { registerUser, loginUser, logoutUser, updateUser, getUsers,getUserProfile, getUserProfileById, checkUser } from '../../controllers/userControllers.js';
+import { registerUser, loginUser, logoutUser, updateUser, getUsers,getUserProfile, getUserProfileById, checkUser, updateUserProfile } from '../../controllers/userControllers.js';
 import authUser from '../../middlewares/authUser.js';
 import authAdmin from '../../middlewares/authAdmin.js';
 import {upload} from '../../middlewares/upload.js';
@@ -20,7 +20,19 @@ router.get("/profile", authMiddleware, getUserProfile);
 // ✅ Get specific user profile by ID (Only for admins)
 router.get("/get-user-profile/:id", authMiddleware, getUserProfileById);
 
-router.patch('/update', authMiddleware,  updateUser);
+router.patch(
+  '/profile/update',
+  authMiddleware,
+  upload.fields([
+    { name: 'profilePic', maxCount: 1 },
+    { name: 'resume', maxCount: 1 },
+  ]),
+  updateUserProfile
+);
+
+
+// router.patch('/update', authMiddleware,  updateUser);
+
 router.post('/logout',authMiddleware, logoutUser);
 
 export default router;

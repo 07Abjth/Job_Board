@@ -201,6 +201,51 @@ export const updateUser = async (req, res) => {
   }
 };
 
+//update user profile
+ export const updateUserProfile = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const updateData = {};
+
+    // 1. Text Fields
+    const textFields = ['name', 'skills', 'education', 'workExperience', 'companyName', 'companyWebsite'];
+    textFields.forEach((field) => {
+      if (req.body[field]) updateData[field] = req.body[field];
+    });
+
+    // 2. Resume upload (PDF/DOC)
+    if (req.files?.resume?.length > 0) {
+      const resumeFile = req.files.resume[0];
+      const result = await cloudinaryInstance.uploader.upload(resumeFile.path, {
+        resource_type: 'raw',
+      });
+      updateData.resume = result.secure_url;
+    }
+
+    // 3. Profile Picture upload (Image)
+    if (req.files?.profilePic?.length > 0) {
+      const imageFile = req.files.profilePic[0];
+      const result = await cloudinaryInstance.uploader.upload(imageFile.path, {
+        resource_type: 'image',
+      });
+      updateData.profilePic = result.secure_url;
+    }
+
+    // 4. Update in DB
+    const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
+      new: true,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      user: updatedUser,
+    });
+  } catch (error) {
+    console.error("Update error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 
 
 
