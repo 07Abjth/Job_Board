@@ -8,7 +8,7 @@ import {
   faBuilding,
   faClock,
 } from '@fortawesome/free-solid-svg-icons';
- 
+
 export const HomePage = () => {
   const [latestJobs, setLatestJobs] = useState([]);
   const [loadingLatest, setLoadingLatest] = useState(true);
@@ -31,15 +31,13 @@ export const HomePage = () => {
         setLoadingLatest(false);
       }
     };
-  
+
     fetchLatestJobsData();
   }, []);
-  
 
   useEffect(() => {
-    // Temporary dummy data for job types
     const dummyJobTypes = ['Full-time', 'Part-time', 'Internship', 'Contract'];
-    setJobTypes(dummyJobTypes); // Set the dummy job types for now
+    setJobTypes(dummyJobTypes);
   }, []);
 
   const handleSearchChange = (event) => {
@@ -60,7 +58,15 @@ export const HomePage = () => {
     );
   };
 
- 
+  const filteredJobs = latestJobs.filter((job) => {
+    const matchesSearch = searchQuery === '' ||
+      job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.company.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = categoryFilter === '' || job.category === categoryFilter;
+    const matchesLocation = locationFilter === '' || job.location.toLowerCase().includes(locationFilter.toLowerCase());
+    const matchesJobType = selectedJobTypes.length === 0 || selectedJobTypes.includes(job.jobType);
+    return matchesSearch && matchesCategory && matchesLocation && matchesJobType;
+  });
 
   return (
     <div className="px-4 py-8 max-w-7xl mx-auto">
@@ -78,16 +84,15 @@ export const HomePage = () => {
             value={searchQuery}
             onChange={handleSearchChange}
           />
-          <Link
-            to={`/job-list?search=${searchQuery}`}
+          <button
             className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             Search Jobs
-          </Link>
+          </button>
         </div>
       </section>
 
-      {/* Filters (Example - can be expanded) */}
+      {/* Filters */}
       <section className="mb-8">
         <h2 className="text-xl font-semibold mb-4">Filter Your Search</h2>
         <div className="flex flex-wrap gap-4 items-center">
@@ -151,11 +156,11 @@ export const HomePage = () => {
         <h2 className="text-2xl font-semibold mb-6">Latest Jobs</h2>
         {loadingLatest ? (
           <p>Loading jobs...</p>
-        ) : latestJobs.length === 0 ? (
-          <p>No latest jobs posted yet.</p>
+        ) : filteredJobs.length === 0 ? (
+          <p>No jobs found matching your criteria.</p>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {latestJobs.map((job) => (
+            {filteredJobs.map((job) => (
               <JobCard key={job._id} job={job} />
             ))}
           </div>
@@ -170,7 +175,7 @@ export const HomePage = () => {
         </div>
       </section>
 
-      {/* Why Choose Us (Example Section) */}
+      {/* Why Choose Us */}
       <section className="py-8 bg-gray-50 rounded-lg shadow-md mb-12">
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-2xl font-semibold mb-4">Why Choose Talent Hiring?</h2>

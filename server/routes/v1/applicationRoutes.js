@@ -1,6 +1,6 @@
 import express from "express";
  
- import { applyForJob, getAppliedJobs, getJobApplications, getUserApplications, updateApplicationStatus } from "../../controllers/applicationControllers.js";
+ import { applyForJob, getApplicationsForEmployer, getAppliedJobs, getJobApplications, getUserApplications, updateApplicationStatus } from "../../controllers/applicationControllers.js";
 import authUser from "../../middlewares/authUser.js";
 import authMiddleware from "../../middlewares/authMiddleware.js";
 import { upload } from "../../middlewares/upload.js";
@@ -20,5 +20,9 @@ router.get("/user", authMiddleware, getUserApplications);
 
 // ✅ Update Application Status (Employer)
 router.put("/:applicationId/status",  authMiddleware, updateApplicationStatus);
+
+router.get("/applications/employer", authMiddleware, getApplicationsForEmployer); 
+
+
 
 export default router;

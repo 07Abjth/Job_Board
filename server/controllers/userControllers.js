@@ -77,6 +77,8 @@ export const loginUser = async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ success: false, message: "Invalid credentials" });
     }
+
+    
     
     // This will set the "jwt" cookie for you
     const token = generateToken(res, user);

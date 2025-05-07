@@ -18,7 +18,7 @@ export const Footer = () => {
     <a className="link link-hover">Contact</a>
     <a className="link link-hover">Jobs</a>
     <a className="link link-hover">Press kit</a>
-    <Link to="/employer/signup">Employer Signup</Link>
+    <Link to="/employer/signup">Are you an Employer ? Join here</Link>
   </nav>
   <nav>
     <h6 className="footer-title">Legal</h6>

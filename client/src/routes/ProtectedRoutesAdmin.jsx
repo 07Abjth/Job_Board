@@ -8,6 +8,8 @@ export const ProtectedRoutesAdmin = () => {
   const checkAdmin = async () => {
     try {
       const response = await axiosInstance.post("/admin/check-admin", {}, { withCredentials: true });
+      console.log("Admin check response:", response.data);
+      
       if (response.status === 200) {
         setIsAdminAuth(true);
       } else {
@@ -31,5 +33,5 @@ export const ProtectedRoutesAdmin = () => {
     );
   }
 
-  return isAdminAuth ? <Outlet /> : <Navigate to="/login" />;
+  return isAdminAuth ? <Outlet /> : <Navigate to="/admin/login" />;
 };

@@ -2,20 +2,43 @@ import React, { useState } from 'react';
 import { axiosInstance } from '../../config/axiosInstance';
 import toast from 'react-hot-toast';
 
+const InputField = ({ label, type = 'text', value, onChange, required = false }) => (
+  <div className="flex flex-col gap-1">
+    <label className="text-sm font-medium text-gray-700">{label}</label>
+    <input
+      type={type}
+      value={value}
+      onChange={onChange}
+      required={required}
+      className="input input-bordered w-full rounded-lg px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+);
+
+const TextAreaField = ({ label, value, onChange, required = false }) => (
+  <div className="flex flex-col gap-1">
+    <label className="text-sm font-medium text-gray-700">{label}</label>
+    <textarea
+      value={value}
+      onChange={onChange}
+      required={required}
+      className="textarea textarea-bordered w-full rounded-lg px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+);
+
 export const PostJob = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [company, setCompany] = useState('');
   const [location, setLocation] = useState('');
   const [salary, setSalary] = useState('');
-   const [category, setCategory] = useState('');
-   const [jobType, setJobType] = useState('');
+  const [category, setCategory] = useState('');
+  const [jobType, setJobType] = useState('');
   const [experience, setExperience] = useState('');
   const [qualifications, setQualifications] = useState('');
   const [requirements, setRequirements] = useState('');
- 
 
- 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -31,21 +54,21 @@ export const PostJob = () => {
         qualifications,
         requirements,
       };
-      
+
       const res = await axiosInstance.post('/jobs/create', newJob);
       toast.success(res.data.message);
-      
-      // Clear form after successful post
+
+      // Clear form
       setTitle('');
-    setDescription('');
-    setCompany('');
-    setLocation('');
-    setSalary('');
-    setCategory('');
-    setJobType('');
-    setExperience('');
-    setQualifications('');
-    setRequirements('');
+      setDescription('');
+      setCompany('');
+      setLocation('');
+      setSalary('');
+      setCategory('');
+      setJobType('');
+      setExperience('');
+      setQualifications('');
+      setRequirements('');
     } catch (error) {
       console.error("Job post failed:", error);
       toast.error(error.response?.data?.message || "Failed to post job");
@@ -53,103 +76,30 @@ export const PostJob = () => {
   };
 
   return (
-    <div className="p-4 max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Post a Job</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block mb-1">Job Title</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="input input-bordered w-full"
-            required
-          />
+    <div className="max-w-3xl mx-auto p-8 bg-white shadow-xl rounded-xl">
+      <h1 className="text-3xl font-semibold text-gray-800 mb-6">🚀 Post a New Job</h1>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <InputField label="Job Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
+          <InputField label="Company" value={company} onChange={(e) => setCompany(e.target.value)} required />
+          <InputField label="Location" value={location} onChange={(e) => setLocation(e.target.value)} required />
+          <InputField label="Salary" type="number" value={salary} onChange={(e) => setSalary(e.target.value)} required />
+          <InputField label="Category" value={category} onChange={(e) => setCategory(e.target.value)} />
+          <InputField label="Job Type" value={jobType} onChange={(e) => setJobType(e.target.value)} />
+          <InputField label="Experience" value={experience} onChange={(e) => setExperience(e.target.value)} />
+          <InputField label="Qualifications" value={qualifications} onChange={(e) => setQualifications(e.target.value)} />
+          <InputField label="Requirements" value={requirements} onChange={(e) => setRequirements(e.target.value)} />
         </div>
+        <TextAreaField label="Job Description" value={description} onChange={(e) => setDescription(e.target.value)} required />
+
         <div>
-          <label className="block mb-1">Description</label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="textarea textarea-bordered w-full"
-            required
-          />
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200"
+          >
+            Post Job
+          </button>
         </div>
-        <div>
-          <label className="block mb-1">Company</label>
-          <input
-            type="text"
-            value={company}
-            onChange={(e) => setCompany(e.target.value)}
-            className="input input-bordered w-full"
-            required
-          />
-        </div>
-        <div>
-          <label className="block mb-1">Location</label>
-          <input
-            type="text"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            className="input input-bordered w-full"
-            required
-          />
-        </div>
-        <div>
-          <label className="block mb-1">Salary</label>
-          <input
-  type="number"
-  value={salary}
-  onChange={(e) => setSalary(e.target.value)}
-  className="input input-bordered w-full"
-  required
-/>
-        </div>
-        <div>
-          <label className="block mb-1">Category</label>
-          <input
-            type="text"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="input input-bordered w-full"
-          />
-        </div>
-        <div>
-          <label className="block mb-1">Experience</label>
-          <input
-            type="text"
-            value={experience}
-            onChange={(e) => setExperience(e.target.value)}
-            className="input input-bordered w-full"
-          />
-        </div>
-        <div>
-          <label className="block mb-1">Job Type</label>
-          <input
-            type="text"
-            value={jobType}
-            onChange={(e) => setJobType(e.target.value)}
-            className="input input-bordered w-full"
-          />
-        </div> 
-          <div>
-          <label className="block mb-1">Requirements</label>
-          <input
-            type="text"
-            value={requirements}
-            onChange={(e) => setRequirements(e.target.value)}
-            className="input input-bordered w-full"
-          />
-        </div>  <div>
-          <label className="block mb-1">Qualifications</label>
-          <input
-            type="text"
-            value={qualifications}
-            onChange={(e) => setQualifications(e.target.value)}
-            className="input input-bordered w-full"
-          />
-        </div>
-        <button type="submit" className="btn btn-primary w-full">Post Job</button>
       </form>
     </div>
   );

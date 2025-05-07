@@ -1,16 +1,18 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { PublicHeader } from '../public/PublicHeader'; // Make sure this path is correct
-import { Footer } from '../user/Footer'; // You might have a different footer for public pages
+import { PublicHeader } from '../public/PublicHeader';
+import { Footer } from '../user/Footer';
 
 export const PublicLayout = () => {
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <PublicHeader />
-      <div>
+      
+      <main className="flex-grow">
         <Outlet />
-      </div>
-      <Footer />  
-    </>
+      </main>
+      
+      <Footer />
+    </div>
   );
 };

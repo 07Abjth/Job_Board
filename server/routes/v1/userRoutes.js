@@ -1,7 +1,6 @@
 import express from 'express';
 import { registerUser, loginUser, logoutUser, updateUser, getUsers,getUserProfile, getUserProfileById, checkUser, updateUserProfile } from '../../controllers/userControllers.js';
-import authUser from '../../middlewares/authUser.js';
-import authAdmin from '../../middlewares/authAdmin.js';
+ 
 import {upload} from '../../middlewares/upload.js';
 import authMiddleware from '../../middlewares/authMiddleware.js';
  

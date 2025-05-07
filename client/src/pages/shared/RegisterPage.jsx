@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { axiosInstance } from "../../config/axiosInstance";
 import { useDispatch } from "react-redux";
@@ -8,41 +8,61 @@ import { saveUserData } from "../../redux/features/userSlice";
 export const RegisterPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const isEmployerRoute = location.pathname.includes("/employer/signup");
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
-    role: "user",
+    role: isEmployerRoute ? "employer" : "user",
+    companyName: "",
+    companyWebsite: "",
   });
 
   const [profilePic, setProfilePic] = useState(null);
+  const [companyLogo, setCompanyLogo] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleFileChange = (e) => {
-    setProfilePic(e.target.files[0]);
+    const file = e.target.files[0];
+    if (isEmployerRoute) {
+      setCompanyLogo(file);
+    } else {
+      setProfilePic(file);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (formData.password !== formData.confirmPassword) {
+      toast.error("Passwords do not match.");
+      return;
+    }
+
     const form = new FormData();
     Object.entries(formData).forEach(([key, value]) => form.append(key, value));
-    if (profilePic) {
+
+    if (isEmployerRoute && companyLogo) {
+      form.append("companyLogo", companyLogo);
+    }
+
+    if (!isEmployerRoute && profilePic) {
       form.append("profilePic", profilePic);
     }
 
     try {
-      const registerApi =
-        formData.role === "employer"
-          ? "/employer/register"
-          : formData.role === "admin"
-          ? "/admin/register"
-          : "/user/register";
+      const registerApi = isEmployerRoute
+        ? "/employer/register"
+        : formData.role === "admin"
+        ? "/admin/register"
+        : "/user/register";
 
       const response = await axiosInstance.post(registerApi, form, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -70,7 +90,10 @@ export const RegisterPage = () => {
 
   return (
     <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6">Register to JobBoard</h2>
+      <h2 className="text-2xl font-bold mb-6">
+        {isEmployerRoute ? "Register as Employer" : "Register to JobBoard"}
+      </h2>
+
       <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
         <div>
           <label className="block text-sm font-medium text-gray-700">Full Name</label>
@@ -81,7 +104,6 @@ export const RegisterPage = () => {
             value={formData.name}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border rounded-md"
-            placeholder="Enter your full name"
           />
         </div>
 
@@ -94,9 +116,35 @@ export const RegisterPage = () => {
             value={formData.email}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border rounded-md"
-            placeholder="Enter your email"
           />
         </div>
+
+        {isEmployerRoute && (
+          <>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Company Name</label>
+              <input
+                type="text"
+                name="companyName"
+                required
+                value={formData.companyName}
+                onChange={handleChange}
+                className="mt-1 block w-full px-3 py-2 border rounded-md"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Company Website</label>
+              <input
+                type="url"
+                name="companyWebsite"
+                value={formData.companyWebsite}
+                onChange={handleChange}
+                className="mt-1 block w-full px-3 py-2 border rounded-md"
+              />
+            </div>
+          </>
+        )}
 
         <div>
           <label className="block text-sm font-medium text-gray-700">Password</label>
@@ -107,7 +155,6 @@ export const RegisterPage = () => {
             value={formData.password}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border rounded-md"
-            placeholder="Enter your password"
           />
         </div>
 
@@ -120,34 +167,20 @@ export const RegisterPage = () => {
             value={formData.confirmPassword}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border rounded-md"
-            placeholder="Confirm your password"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Profile Picture</label>
+          <label className="block text-sm font-medium text-gray-700">
+            {isEmployerRoute ? "Company Logo" : "Profile Picture"}
+          </label>
           <input
             type="file"
-            name="profilePic"
+            name={isEmployerRoute ? "companyLogo" : "profilePic"}
             accept="image/*"
-            required
             onChange={handleFileChange}
             className="mt-1 block w-full"
           />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">I am a</label>
-          <select
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-            className="mt-1 block w-full px-3 py-2 border rounded-md"
-          >
-            <option value="user">Job Seeker</option>
-            <option value="employer">Employer</option>
-            {/* <option value="admin">Administrator</option> */}
-          </select>
         </div>
 
         <button
@@ -158,11 +191,15 @@ export const RegisterPage = () => {
         </button>
 
         <p className="text-sm text-gray-600">
-          Already have an account?{" "}
-          <Link to="/login" className="text-blue-500 hover:text-blue-600">
-            Log in
-          </Link>
-        </p>
+  Already have an account?{" "}
+  <Link
+    to={isEmployerRoute ? "/employer/login" : "/login"}
+    className="text-blue-500 hover:text-blue-600"
+  >
+    Log in
+  </Link>
+</p>
+
       </form>
     </div>
   );

@@ -29,8 +29,17 @@ export const LoginPage = ({ role = "user" }) => {
     user.role = "employer";
     user.login_api = "/employer/login";
     user.profile_route = "/employer/profile";
-    user.home_route = "/employer";
+    user.home_route = "/employer/dashboard";
     user.signup_route = "/employer/signup";
+  }
+
+  if (role === "admin") {
+    user.role = "admin";
+    user.login_api = "/admin/login";
+    user.profile_route = "/admin/profile";
+    user.home_route = "/admin/dashboard";
+    user.signup_route = "/admin/signup";
+    
   }
 
   console.log("====USER ROLE CONFIG====", user);
