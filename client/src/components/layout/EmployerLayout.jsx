@@ -63,7 +63,7 @@ export const EmployerLayout = () => {
   }
 
   return (
-    <div className="flex flex-row justify-between min-h-screen">
+    <div className="min-h-screen flex flex-col">
       {/* only show sidebar on non-public routes when authenticated */}
       {isEmployerAuth && !isPublicRoute && (
         <div className="w-2/12">
@@ -75,8 +75,8 @@ export const EmployerLayout = () => {
         {/* choose header based on auth */}
         {isEmployerAuth && !isPublicRoute ? <EmployerHeader /> : <PublicHeader />}
 
-       <main className="flex-grow px-4 py-8">
-  <Outlet />
+        <main className="flex-1">
+        <Outlet />
 </main>
 
 

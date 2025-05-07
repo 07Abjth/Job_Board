@@ -27,17 +27,18 @@ export const UserLayout = () => {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Show the correct header based on login state */}
+    <div className="min-h-screen flex flex-col">
+      {/* Header */}
       {isUserAuth ? <UserHeader /> : <PublicHeader />}
-
+  
       {/* Main content */}
       <main className="flex-grow">
         <Outlet />
       </main>
-
+  
       {/* Footer */}
       <Footer />
     </div>
   );
-};
+}
+  

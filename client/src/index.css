@@ -3,29 +3,3 @@
 
 
  
-/* Main layout container */
-#root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* This ensures the container takes at least the full viewport height */
-}
-
-/* Main content area */
-.main-content {
-  flex: 1; /* This will make the content area expand to fill available space */
-  padding-bottom: 2rem; /* Add extra padding at the bottom of your content */
-  min-height: 80vh; /* Ensures a minimum height for content area */
-}
-
-/* Footer styling */
-footer {
-  margin-top: auto; /* Pushes the footer to the bottom */
-  padding: 1.5rem 0;
-  background-color: #f8f9fa; /* Light background for the footer */
-  border-top: 1px solid #e9ecef;
-}
-
-/* For pages with little content, ensure minimum spacing */
-.page-container {
-  min-height: 500px; /* Minimum height for page containers */
-}
