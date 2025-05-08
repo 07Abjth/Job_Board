@@ -7,16 +7,14 @@ import { EmployerHeader } from "../employer/EmployerHeader";
 import { PublicHeader } from "../public/PublicHeader";
 import { SideBar } from "../employer/SideBar";
 import { EmployerFooter } from "../employer/EmployerFooter";
+ 
 
 export const EmployerLayout = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 
-  // pull auth flag from redux
   const { isEmployerAuth } = useSelector((state) => state.employer);
-
-  // local loading flag while we check /employer/check-employer
   const [loading, setLoading] = useState(true);
 
   const isPublicRoute = ["/employer/login", "/employer/signup"].includes(location.pathname);
@@ -42,18 +40,15 @@ export const EmployerLayout = () => {
   };
 
   useEffect(() => {
-    // if it's a public route, skip the check and stop loading
     if (isPublicRoute) {
       setLoading(false);
     } else if (!isEmployerAuth) {
       checkEmployer();
     } else {
-      // already authenticated
       setLoading(false);
     }
   }, [location.pathname]);
 
-  // while we're checking auth (and not on login/signup), show nothing or a spinner
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -62,24 +57,28 @@ export const EmployerLayout = () => {
     );
   }
 
+  const showSidebar = isEmployerAuth && !isPublicRoute;
+
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* only show sidebar on non-public routes when authenticated */}
-      {isEmployerAuth && !isPublicRoute && (
-        <div className="w-2/12">
+    <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900">
+      {/* Sidebar */}
+      {showSidebar && (
+        <aside className="w-2/12 min-h-screen">
           <SideBar />
-        </div>
+        </aside>
       )}
 
-      <div className={`${isEmployerAuth && !isPublicRoute ? "w-10/12" : "w-full"} bg-gray-100 dark:bg-gray-900 min-h-screen`}>
-        {/* choose header based on auth */}
-        {isEmployerAuth && !isPublicRoute ? <EmployerHeader /> : <PublicHeader />}
+      {/* Content */}
+      <div className={`${showSidebar ? "w-10/12" : "w-full"} flex flex-col`}>
+        {/* Header */}
+        {showSidebar ? <EmployerHeader /> : <PublicHeader />}
 
-        <main className="flex-1">
-        <Outlet />
-</main>
+        {/* Main content */}
+        <main className="flex-1 px-4 py-6">
+          <Outlet />
+        </main>
 
-
+        {/* Footer */}
         <EmployerFooter />
       </div>
     </div>
