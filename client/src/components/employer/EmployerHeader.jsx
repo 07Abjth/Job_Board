@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { clearEmployerData } from "../../redux/features/employerSlice";
 import { axiosInstance } from "../../config/axiosInstance";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 export const EmployerHeader = () => {
   const dispatch = useDispatch();
@@ -48,8 +49,10 @@ export const EmployerHeader = () => {
       </div>
 
       <div className="navbar-center">
-        <a className="btn btn-ghost text-xl">Talent Hiring</a>
-      </div>
+  <Link to="/employer/home" className="text-2xl font-bold text-primary hover:text-blue-700 transition duration-200">
+    Talent Hiring
+  </Link>
+</div>
 
       <div className="navbar-end flex items-center space-x-2">
         <button className="btn btn-ghost btn-circle">

@@ -7,7 +7,6 @@ import { EmployerHeader } from "../employer/EmployerHeader";
 import { PublicHeader } from "../public/PublicHeader";
 import { SideBar } from "../employer/SideBar";
 import { EmployerFooter } from "../employer/EmployerFooter";
- 
 
 export const EmployerLayout = () => {
   const dispatch = useDispatch();
@@ -60,26 +59,26 @@ export const EmployerLayout = () => {
   const showSidebar = isEmployerAuth && !isPublicRoute;
 
   return (
-    <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900">
-      {/* Sidebar */}
-      {showSidebar && (
-        <aside className="w-2/12 min-h-screen">
-          <SideBar />
-        </aside>
-      )}
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+      {/* Header */}
+      {showSidebar ? <EmployerHeader /> : <PublicHeader />}
 
-      {/* Content */}
-      <div className={`${showSidebar ? "w-10/12" : "w-full"} flex flex-col`}>
-        {/* Header */}
-        {showSidebar ? <EmployerHeader /> : <PublicHeader />}
+      <div className="flex flex-col md:flex-row min-h-screen">
+        {/* Sidebar */}
+        {showSidebar && (
+          <aside className="w-full md:w-64 bg-white dark:bg-gray-800 shadow-md">
+            <SideBar />
+          </aside>
+        )}
 
-        {/* Main content */}
-        <main className="flex-1 px-4 py-6">
-          <Outlet />
-        </main>
+        {/* Main Content */}
+        <div className="flex-1 p-4">
+          <main className="min-h-[calc(100vh-4rem)]">
+            <Outlet />
+          </main>
 
-        {/* Footer */}
-        <EmployerFooter />
+          <EmployerFooter />
+        </div>
       </div>
     </div>
   );

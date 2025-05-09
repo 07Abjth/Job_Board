@@ -29,6 +29,8 @@ import { PaymentCancelPage } from "../payment/PaymentCancelPage";
 import { PaymentSuccessPage } from "../payment/PaymentSuccessPage";
  import { ManageJobApplications } from "../pages/employer/ManageJobApplications";
 import { ManagePostedJobs } from "../pages/employer/ManagePostedJobs";
+import { SettingsPage } from "../pages/shared/SettingsPage";
+import { EmployerHomePage } from "../pages/employer/EmployerHomePage";
 
 export const router = createBrowserRouter([
   // USER Layout
@@ -51,6 +53,7 @@ export const router = createBrowserRouter([
         element: <ProtectedRoutes />,
         children: [
           { path: "user/profile", element: <ProfilePage /> },
+          { path: "user/settings", element: <SettingsPage /> },
           { path: "user/saved-job", element: <SavedJobs /> },
           { path: "user/user-dashboard", element: <UserDashboard /> },
           { path: "user/apply-job/:id", element: <ApplyForm /> },
@@ -78,6 +81,8 @@ export const router = createBrowserRouter([
       {
         element: <ProtectedRoutesEmployer />,
         children: [
+          { index: true, element: <Navigate to="/employer/home" /> },
+          {index: true, path: "home", element: <EmployerHomePage /> },
           { path: "post-job", element: <PostJob /> },
           { path: "profile", element: <ProfilePage /> },
           { path: "manage-job-applications", element: <ManageJobApplications /> },

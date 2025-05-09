@@ -52,21 +52,57 @@ export const UserHeader = () => {
       <DarkMode />
 
       {isUserAuth && (
-        <div className="dropdown dropdown-end">
-          <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-            <UserProfileImage />
-          </div>
-          <ul
-            tabIndex={0}
-            className="menu dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-          >
-            <li><Link to="/user/profile">Profile</Link></li>
-            <li><Link to="/user/saved-job">Saved Jobs</Link></li>
-            <li><Link to="/user/settings">Settings</Link></li>
-            <li><Link to="/user/applied-jobs">Applied Jobs</Link></li>
-            <li><button onClick={handleLogout}>Logout</button></li>
-          </ul>
-        </div>
+       <div className="dropdown dropdown-end">
+       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+         <UserProfileImage />
+       </div>
+       <ul
+         tabIndex={0}
+         className="menu dropdown-content mt-3 z-[1] p-2 shadow-lg bg-white dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-200 rounded-xl w-52 space-y-1"
+       >
+         <li>
+           <button
+             onClick={() => navigate("/user/profile")}
+             className="w-full text-left hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1"
+           >
+             👤 Profile
+           </button>
+         </li>
+         <li>
+           <button
+             onClick={() => navigate("/user/saved-job")}
+             className="w-full text-left hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1"
+           >
+             💾 Saved Jobs
+           </button>
+         </li>
+         <li>
+           <button
+             onClick={() => navigate("/user/settings")}
+             className="w-full text-left hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1"
+           >
+             ⚙️ Settings
+           </button>
+         </li>
+         <li>
+           <button
+             onClick={() => navigate("/user/applied-jobs")}
+             className="w-full text-left hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1"
+           >
+             📋 Applied Jobs
+           </button>
+         </li>
+         <li>
+           <button
+             onClick={handleLogout}
+             className="w-full text-left hover:bg-red-100 dark:hover:bg-red-800 text-red-500 dark:text-red-400 rounded-md px-2 py-1"
+           >
+             🚪 Logout
+           </button>
+         </li>
+       </ul>
+     </div>
+     
       )}
     </div>
   </div>

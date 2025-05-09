@@ -69,61 +69,66 @@ export const HomePage = () => {
   });
 
   return (
-    <div className="px-4 py-8 max-w-7xl mx-auto">
+    <div className="px-6 py-10 max-w-7xl mx-auto">
       {/* Hero Section with Search */}
-      <section className="text-center mb-12">
-        <h1 className="text-4xl sm:text-5xl font-bold mb-4">Find your dream job 🔍</h1>
-        <p className="text-gray-600 mb-6 text-lg">
+      <section className="text-center mb-12 bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-8 rounded-xl shadow-lg">
+        <h1 className="text-4xl sm:text-5xl font-bold mb-4">Find Your Dream Job 🔍</h1>
+        <p className="text-lg mb-6">
           Browse thousands of jobs from top companies. Get hired fast.
         </p>
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-6">
           <input
             type="text"
             placeholder="Search job titles, keywords, or companies"
-            className="w-full sm:w-96 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full sm:w-96 px-6 py-3 border rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={searchQuery}
             onChange={handleSearchChange}
           />
           <button
-            className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-block px-6 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors shadow-md"
           >
             Search Jobs
           </button>
         </div>
       </section>
 
-      {/* Filters */}
-      <section className="mb-8">
+      {/* Filters Section */}
+      <section className="mb-8 bg-gray-100 p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-4">Filter Your Search</h2>
         <div className="flex flex-wrap gap-4 items-center">
-          <div>
+          <div className="flex flex-col">
             <label htmlFor="category" className="mr-2 text-gray-700">Category:</label>
-            <select id="category" className="border rounded-md py-2 px-3 focus:outline-none" value={categoryFilter} onChange={handleCategoryChange}>
+            <select
+              id="category"
+              className="border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={categoryFilter}
+              onChange={handleCategoryChange}
+            >
               <option value="">All Categories</option>
               <option value="IT">Information Technology</option>
               <option value="Marketing">Marketing</option>
             </select>
           </div>
-          <div>
+          <div className="flex flex-col">
             <label htmlFor="location" className="mr-2 text-gray-700">Location:</label>
             <input
               type="text"
               id="location"
               placeholder="City, State, or Remote"
-              className="border rounded-md py-2 px-3 focus:outline-none"
+              className="border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={locationFilter}
               onChange={handleLocationChange}
             />
           </div>
           {jobTypes.length > 0 && (
-            <div>
+            <div className="flex flex-col">
               <label className="block mb-2 text-gray-700">Job Type:</label>
               <div className="flex flex-wrap gap-2">
                 {jobTypes.map((type) => (
                   <button
                     key={type}
-                    className={`px-3 py-1 rounded-full text-sm ${
-                      selectedJobTypes.includes(type) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-blue-100'
+                    className={`px-4 py-2 rounded-lg text-sm ${
+                      selectedJobTypes.includes(type) ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-700 hover:bg-blue-200'
                     } focus:outline-none transition`}
                     onClick={() => handleJobTypeChange(type)}
                   >
@@ -138,12 +143,12 @@ export const HomePage = () => {
 
       {/* Featured Companies */}
       <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6">Featured Companies</h2>
+        <h2 className="text-2xl font-semibold mb-6 text-black dark:text-white">Featured Companies</h2>
         <div className="flex flex-wrap gap-4 justify-center">
           {featuredCompanies.map((name, index) => (
             <div
               key={index}
-              className="px-5 py-2 border rounded-lg shadow-sm bg-white hover:shadow-md transition"
+              className="px-5 py-3 border rounded-lg shadow-sm bg-white dark:bg-gray-800 text-black dark:text-white hover:shadow-lg transition"
             >
               {name}
             </div>

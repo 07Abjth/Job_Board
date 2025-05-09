@@ -27,7 +27,7 @@ export const UserLayout = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col ">
       {/* Header */}
       {isUserAuth ? <UserHeader /> : <PublicHeader />}
   

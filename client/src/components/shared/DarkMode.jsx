@@ -12,9 +12,9 @@ export const DarkMode = () => {
 
   return (
     <div>
-<label className="swap swap-rotate">
+<label className="swap swap-rotate ">
   {/* this hidden checkbox controls the state */}
-  <input type="checkbox" className="theme-controller"  onClick={toggleTheme} />
+  <input type="checkbox"   onClick={toggleTheme} />
 
   {/* sun icon */}
   <svg

@@ -1,29 +1,25 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const EmployerFooter = () => {
   return (
-    <footer className="bg-gray-900 text-white text-center p-6 mt-10">
-      <div className="max-w-4xl mx-auto flex flex-col items-center space-y-4">
-        <nav className="flex space-x-6">
-          <a href="/about" className="hover:underline">About</a>
-          <a href="/contact" className="hover:underline">Contact</a>
-          <a href="/faq" className="hover:underline">FAQ</a>
-          <a href="/terms" className="hover:underline">Terms</a>
-        </nav>
+    <footer className="bg-gray-900 text-white py-8 mt-10">
+      <div className="max-w-6xl mx-auto px-4 flex flex-col items-center space-y-6">
         
-        <div className="flex space-x-4">
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-            <img src="/icons/facebook.svg" alt="Facebook" className="w-5 h-5" />
-          </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-            <img src="/icons/twitter.svg" alt="Twitter" className="w-5 h-5" />
-          </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-            <img src="/icons/linkedin.svg" alt="LinkedIn" className="w-5 h-5" />
-          </a>
-        </div>
+        {/* Navigation links */}
+        <nav className="flex flex-wrap justify-center gap-6 text-sm font-medium">
+          <Link to="/about" className="hover:text-blue-400 transition">About</Link>
+          <Link to="/contact" className="hover:text-blue-400 transition">Contact</Link>
+          <Link to="/faq" className="hover:text-blue-400 transition">FAQ</Link>
+          <Link to="/terms" className="hover:text-blue-400 transition">Terms</Link>
+        </nav>
 
-        <p className="text-sm text-gray-400">© 2025 Employer Platform. All rights reserved.</p>
+        
+
+        {/* Copyright */}
+        <p className="text-xs text-gray-400 text-center">
+          © 2025 <span className="text-white font-semibold">Employer Platform</span>. All rights reserved.
+        </p>
       </div>
     </footer>
   );

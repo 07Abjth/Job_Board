@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  ChevronDown,
-  Search,
+  ChevronLeft,
   PieChart,
   Briefcase,
   Users,
@@ -14,67 +13,97 @@ import {
 
 export const SideBar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  console.log("employer profile", sidebarOpen);
-  
 
   return (
-    <div className={`bg-primary text-white ${sidebarOpen ? 'w-64' : 'w-20'} transition-all duration-300 flex flex-col min-h-screen`}>
-      <div className="p-4 flex items-center justify-between border-b border-gray-700">
-        <h2 className={`text-2xl font-bold text-blue-400 ${!sidebarOpen && 'hidden'}`}>Talent Hiring</h2>
-        <button onClick={() => setSidebarOpen(!sidebarOpen)} className="bg-gray-800 p-2 rounded-lg">
-          <ChevronDown className={`h-5 w-5 transition-transform ${!sidebarOpen && 'rotate-180'}`} />
+    <div
+      className={`${
+        sidebarOpen ? "w-64" : "w-20"
+      } bg-white border-r border-gray-200 shadow-sm transition-all duration-300 flex flex-col min-h-screen`}
+    >
+      {/* Logo & Toggle */}
+      <div className="flex items-center justify-between px-4 py-4 border-b">
+        <Link
+          to="/employer/home"
+          className={`text-xl font-bold text-primary ${
+            !sidebarOpen && "hidden"
+          }`}
+        >
+          Talent Hiring
+        </Link>
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="p-2 text-gray-600 hover:text-primary"
+        >
+          <ChevronLeft
+            className={`h-5 w-5 transition-transform ${
+              !sidebarOpen && "rotate-180"
+            }`}
+          />
         </button>
       </div>
 
-      <div className="flex-1">
-        <nav className="mt-4">
-          <ul className="space-y-2 font-medium">
-            <li>
-              <Link to="/employer/dashboard" className="flex items-center p-3 hover:bg-slate-700 rounded-lg mx-2">
-                <PieChart className="h-5 w-5" />
-                <span className={`ml-3 ${!sidebarOpen && 'hidden'}`}>Dashboard</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/employer/post-job" className="flex items-center p-3 hover:bg-slate-700 rounded-lg mx-2">
-                <Briefcase className="h-5 w-5" />
-                <span className={`ml-3 ${!sidebarOpen && 'hidden'}`}>Post a Job</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/employer/manage-job-applications" className="flex items-center p-3 hover:bg-slate-700 rounded-lg mx-2">
-                <FileText className="h-5 w-5" />
-                <span className={`ml-3 ${!sidebarOpen && 'hidden'}`}>Manage Applications</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/employer/manage-posted-jobs" className="flex items-center p-3 hover:bg-slate-700 rounded-lg mx-2">
-                <Users className="h-5 w-5" />
-                <span className={`ml-3 ${!sidebarOpen && 'hidden'}`}>Manage Jobs</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/employer/profile" className="flex items-center p-3 hover:bg-slate-700 rounded-lg mx-2">
-                <MessageSquare className="h-5 w-5" />
-                <span className={`ml-3 ${!sidebarOpen && 'hidden'}`}>Company Profile</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/employer/settings" className="flex items-center p-3 hover:bg-slate-700 rounded-lg mx-2">
-                <Settings className="h-5 w-5" />
-                <span className={`ml-3 ${!sidebarOpen && 'hidden'}`}>Settings</span>
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
+      {/* Navigation */}
+      <nav className="flex-1 px-2 mt-4">
+        <ul className="space-y-2 text-gray-700 text-sm">
+          <SidebarItem
+            to="/employer/dashboard"
+            icon={<PieChart className="h-5 w-5" />}
+            label="Dashboard"
+            open={sidebarOpen}
+          />
+          <SidebarItem
+            to="/employer/post-job"
+            icon={<Briefcase className="h-5 w-5" />}
+            label="Post a Job"
+            open={sidebarOpen}
+          />
+          <SidebarItem
+            to="/employer/manage-job-applications"
+            icon={<FileText className="h-5 w-5" />}
+            label="Manage Applications"
+            open={sidebarOpen}
+          />
+          <SidebarItem
+            to="/employer/manage-posted-jobs"
+            icon={<Users className="h-5 w-5" />}
+            label="Manage Jobs"
+            open={sidebarOpen}
+          />
+          <SidebarItem
+            to="/employer/profile"
+            icon={<MessageSquare className="h-5 w-5" />}
+            label="Company Profile"
+            open={sidebarOpen}
+          />
+          <SidebarItem
+            to="/employer/settings"
+            icon={<Settings className="h-5 w-5" />}
+            label="Settings"
+            open={sidebarOpen}
+          />
+        </ul>
+      </nav>
 
-      <div className="p-4 mt-auto">
-        <a href="#" className="flex items-center p-2 text-gray-400 hover:text-white rounded-lg">
+      {/* Logout */}
+      <div className="px-4 py-3 border-t">
+        <button className="flex items-center gap-3 text-sm text-gray-600 hover:text-red-600">
           <LogOut className="h-5 w-5" />
-          <span className={`ml-3 ${!sidebarOpen && 'hidden'}`}>Logout</span>
-        </a>
+          {sidebarOpen && <span>Logout</span>}
+        </button>
       </div>
     </div>
   );
 };
+
+// Reusable sidebar item component
+const SidebarItem = ({ to, icon, label, open }) => (
+  <li>
+    <Link
+      to={to}
+      className="flex items-center gap-3 p-2 rounded-md hover:bg-blue-50 text-gray-700 transition-all"
+    >
+      {icon}
+      {open && <span className="truncate">{label}</span>}
+    </Link>
+  </li>
+);

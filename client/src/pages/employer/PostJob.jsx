@@ -1,31 +1,11 @@
 import React, { useState } from 'react';
 import { axiosInstance } from '../../config/axiosInstance';
 import toast from 'react-hot-toast';
+import { InputField, TextAreaField } from '../shared/FormFields';
 
-const InputField = ({ label, type = 'text', value, onChange, required = false }) => (
-  <div className="flex flex-col gap-1">
-    <label className="text-sm font-medium text-gray-700">{label}</label>
-    <input
-      type={type}
-      value={value}
-      onChange={onChange}
-      required={required}
-      className="input input-bordered w-full rounded-lg px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-    />
-  </div>
-);
+ 
 
-const TextAreaField = ({ label, value, onChange, required = false }) => (
-  <div className="flex flex-col gap-1">
-    <label className="text-sm font-medium text-gray-700">{label}</label>
-    <textarea
-      value={value}
-      onChange={onChange}
-      required={required}
-      className="textarea textarea-bordered w-full rounded-lg px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-    />
-  </div>
-);
+ 
 
 export const PostJob = () => {
   const [title, setTitle] = useState('');
@@ -76,9 +56,9 @@ export const PostJob = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-8 bg-white shadow-xl rounded-xl">
-      <h1 className="text-3xl font-semibold text-gray-800 mb-6">🚀 Post a New Job</h1>
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="max-w-5xl mx-auto px-6 py-10 bg-white shadow-lg rounded-xl">
+      <h1 className="text-3xl font-bold text-gray-800 mb-8 border-b pb-4"> Post a New Job</h1>
+      <form onSubmit={handleSubmit} className="space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <InputField label="Job Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
           <InputField label="Company" value={company} onChange={(e) => setCompany(e.target.value)} required />
@@ -90,17 +70,19 @@ export const PostJob = () => {
           <InputField label="Qualifications" value={qualifications} onChange={(e) => setQualifications(e.target.value)} />
           <InputField label="Requirements" value={requirements} onChange={(e) => setRequirements(e.target.value)} />
         </div>
+
         <TextAreaField label="Job Description" value={description} onChange={(e) => setDescription(e.target.value)} required />
 
         <div>
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200"
+            className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition"
           >
-            Post Job
+            ✅ Post Job
           </button>
         </div>
       </form>
     </div>
   );
 };
+

@@ -29,7 +29,7 @@ export const LoginPage = ({ role = "user" }) => {
     user.role = "employer";
     user.login_api = "/employer/login";
     user.profile_route = "/employer/profile";
-    user.home_route = "/employer/dashboard";
+    user.home_route = "/employer/home";
     user.signup_route = "/employer/signup";
   }
 
