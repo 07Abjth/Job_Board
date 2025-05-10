@@ -5,13 +5,13 @@ export const ContactPage = () => {
     <div className="max-w-4xl mx-auto px-4 py-12">
       <h1 className="text-4xl font-bold mb-6 text-center">Contact Us</h1>
 
-      <p className="text-lg mb-8 text-center text-gray-700">
+      <p className="text-lg mb-8 text-center text-gray-500">
         We'd love to hear from you! Whether you have a question about jobs, employers, features, or anything else, our team is ready to answer.
       </p>
 
-      <div className="space-y-6 text-gray-600">
+      <div className="space-y-6 text-gray-500">
         <div>
-          <h2 className="text-2xl font-semibold mb-2">📧 Email</h2>
+          <h2 className="text-2xl font-semibold mb-2">📧 Email</h2>``
           <p>support@talenthiring.com</p>
         </div>
 

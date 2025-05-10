@@ -1,67 +1,61 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import {dbConnect}  from "./config/dbConfig.js";
-import v1Router from "./routes/v1/index.js"; 
-import cookieParser from "cookie-parser";
+import { dbConnect } from "./config/dbConfig.js";
 import apiRouter from "./routes/index.js";
- 
+import cookieParser from "cookie-parser";
+import http from "http";
+import { Server as SocketIOServer } from "socket.io"; // renamed to avoid confusion
+import { initializeSocket } from "./config/socket.config.js";  
 
-// Load environment variables
 dotenv.config();
 
- 
+const app = express();
 
-// Initialize express app
-const app = express(); 
-
-//  CORS Configuration
-// Place this at the very top of your Express app, before any other middleware
+// CORS config
 const corsOptions = {
   origin: [
     "http://localhost:5173",
     "http://localhost:5174",
-
     "https://talent-hiring-client.vercel.app",
     "https://talent-hiring-client-h3ktqfy6a-abhijith-bss-projects.vercel.app"
   ],
   methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
   credentials: true,
-  maxAge: 86400 // Cache preflight requests for 24 hours
+  maxAge: 86400
 };
-
 app.use(cors(corsOptions));
+app.use(express.json());
+app.use(cookieParser());
 
-
-// ✅ Middleware
-app.use(express.json()); // Parses incoming JSON requests
-app.use(cookieParser()); //  Enables cookie parsing
-
-  
-
-// Add this before your routes to ensure cookies work cross-domain
+// Required for cross-origin cookies
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Credentials', true);
   res.header('Access-Control-Allow-Origin', req.headers.origin);
   next();
 });
 
-// ✅ Connect to MongoDB
 dbConnect();
 
-// ✅ API Versioning
-app.use('/api', apiRouter);
-// app.use("/api/v1", v1Router); // Mount v1 router
+app.use("/api", apiRouter);
+app.get("/", (req, res) => res.send("API is running..."));
 
-// ✅ Sample Route
-app.get("/", (req, res) => {
-  res.send("API is running...");
+// Create raw HTTP server
+const server = http.createServer(app);
+
+// Initialize Socket.IO on top of the HTTP server
+const io = new SocketIOServer(server, {
+  cors: {
+    origin: corsOptions.origin,
+    credentials: true
+  }
 });
 
-// ✅ Define PORT
-const PORT = process.env.PORT || 5000;
+// Pass io to your socket handler
+initializeSocket(io);
 
-// ✅ Start Server
-app.listen(PORT, () => {
+// Start server
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });

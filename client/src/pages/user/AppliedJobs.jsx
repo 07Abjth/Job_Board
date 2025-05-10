@@ -27,7 +27,7 @@ export const AppliedJobs = () => {
     fetchAppliedJobs();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className="text-center">Loading...</div>;
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
@@ -39,14 +39,14 @@ export const AppliedJobs = () => {
           {appliedJobs.map((application) => (
             <div
               key={application._id}
-              className="border rounded-lg p-4 flex flex-col bg-white shadow-sm hover:shadow-md transition duration-300"
+              className="border rounded-lg p-4 flex flex-col dark:bg-gray-800 shadow-sm hover:shadow-md transition duration-300"
             >
               <div className="flex justify-between items-center">
                 <div>
                   <h3 className="text-lg font-semibold">{application.job.company}</h3>
                   <Link
                     to={`/jobs/${application.job._id}`}
-                    className="text-blue-600 hover:underline text-sm"
+                    className="text-blue-600 dark:text-blue-400 hover:underline text-sm"
                   >
                     {application.job.title}
                   </Link>
@@ -55,17 +55,17 @@ export const AppliedJobs = () => {
                   <span
                     className={`px-3 py-1 rounded-full text-xs font-medium ${
                       application.status === "pending"
-                        ? "bg-yellow-100 text-yellow-800"
+                        ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
                         : application.status === "accepted"
-                        ? "bg-green-100 text-green-800"
-                        : "bg-red-100 text-red-800"
+                        ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
+                        : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300"
                     }`}
                   >
                     {application.status}
                   </span>
                 </div>
               </div>
-              <div className="text-gray-500 text-xs mt-2">
+              <div className="text-gray-500 dark:text-gray-400 text-xs mt-2">
                 Applied on: {new Date(application.applied_at).toLocaleDateString()}
               </div>
             </div>

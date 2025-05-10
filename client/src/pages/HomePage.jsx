@@ -80,7 +80,7 @@ export const HomePage = () => {
           <input
             type="text"
             placeholder="Search job titles, keywords, or companies"
-            className="w-full sm:w-96 px-6 py-3 border rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full sm:w-96 px-6 py-3 border rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-base-content bg-base-100"
             value={searchQuery}
             onChange={handleSearchChange}
           />
@@ -93,14 +93,14 @@ export const HomePage = () => {
       </section>
 
       {/* Filters Section */}
-      <section className="mb-8 bg-gray-100 p-6 rounded-lg shadow-md">
+      <section className="mb-8 bg-base-200 p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-4">Filter Your Search</h2>
         <div className="flex flex-wrap gap-4 items-center">
           <div className="flex flex-col">
-            <label htmlFor="category" className="mr-2 text-gray-700">Category:</label>
+            <label htmlFor="category" className="mr-2 text-base-content">Category:</label>
             <select
               id="category"
-              className="border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
               value={categoryFilter}
               onChange={handleCategoryChange}
             >
@@ -110,25 +110,25 @@ export const HomePage = () => {
             </select>
           </div>
           <div className="flex flex-col">
-            <label htmlFor="location" className="mr-2 text-gray-700">Location:</label>
+            <label htmlFor="location" className="mr-2 text-base-content">Location:</label>
             <input
               type="text"
               id="location"
               placeholder="City, State, or Remote"
-              className="border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
               value={locationFilter}
               onChange={handleLocationChange}
             />
           </div>
           {jobTypes.length > 0 && (
             <div className="flex flex-col">
-              <label className="block mb-2 text-gray-700">Job Type:</label>
+              <label className="block mb-2 text-base-content">Job Type:</label>
               <div className="flex flex-wrap gap-2">
                 {jobTypes.map((type) => (
                   <button
                     key={type}
                     className={`px-4 py-2 rounded-lg text-sm ${
-                      selectedJobTypes.includes(type) ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-700 hover:bg-blue-200'
+                      selectedJobTypes.includes(type) ? 'bg-primary text-primary-content' : 'bg-base-300 text-base-content hover:bg-primary/20'
                     } focus:outline-none transition`}
                     onClick={() => handleJobTypeChange(type)}
                   >
@@ -143,12 +143,12 @@ export const HomePage = () => {
 
       {/* Featured Companies */}
       <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6 text-black dark:text-white">Featured Companies</h2>
+        <h2 className="text-2xl font-semibold mb-6 text-base-content">Featured Companies</h2>
         <div className="flex flex-wrap gap-4 justify-center">
           {featuredCompanies.map((name, index) => (
             <div
               key={index}
-              className="px-5 py-3 border rounded-lg shadow-sm bg-white dark:bg-gray-800 text-black dark:text-white hover:shadow-lg transition"
+              className="px-5 py-3 border rounded-lg shadow-sm bg-base-100 text-base-content hover:shadow-lg transition"
             >
               {name}
             </div>
@@ -158,11 +158,11 @@ export const HomePage = () => {
 
       {/* Latest Jobs */}
       <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6">Latest Jobs</h2>
+        <h2 className="text-2xl font-semibold mb-6 text-base-content">Latest Jobs</h2>
         {loadingLatest ? (
-          <p>Loading jobs...</p>
+          <p className="text-base-content">Loading jobs...</p>
         ) : filteredJobs.length === 0 ? (
-          <p>No jobs found matching your criteria.</p>
+          <p className="text-base-content">No jobs found matching your criteria.</p>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filteredJobs.map((job) => (
@@ -173,7 +173,7 @@ export const HomePage = () => {
         <div className="text-center mt-6">
           <Link
             to="/subscription"
-            className="text-blue-600 font-semibold hover:underline"
+            className="text-primary font-semibold hover:underline"
           >
             View all jobs →
           </Link>
@@ -181,27 +181,27 @@ export const HomePage = () => {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-8 bg-gray-50 rounded-lg shadow-md mb-12">
+      <section className="py-8 bg-base-200 rounded-lg shadow-md mb-12">
         <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-2xl font-semibold mb-4">Why Choose Talent Hiring?</h2>
-          <p className="text-gray-600 mb-4">
+          <h2 className="text-2xl font-semibold mb-4 text-base-content">Why Choose Talent Hiring?</h2>
+          <p className="text-base-content/70 mb-4">
             We connect talented individuals with leading companies, offering a seamless and efficient job search experience.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
               <FontAwesomeIcon icon={faBriefcase} size="2x" className="text-blue-500 mb-2" />
-              <h3 className="font-semibold">Wide Range of Jobs</h3>
-              <p className="text-sm text-gray-500">Explore thousands of opportunities across various industries and locations.</p>
+              <h3 className="font-semibold text-base-content">Wide Range of Jobs</h3>
+              <p className="text-sm text-base-content/60">Explore thousands of opportunities across various industries and locations.</p>
             </div>
             <div>
               <FontAwesomeIcon icon={faClock} size="2x" className="text-green-500 mb-2" />
-              <h3 className="font-semibold">Stay Updated</h3>
-              <p className="text-sm text-gray-500">Get the latest job postings delivered right to your inbox.</p>
+              <h3 className="font-semibold text-base-content">Stay Updated</h3>
+              <p className="text-sm text-base-content/60">Get the latest job postings delivered right to your inbox.</p>
             </div>
             <div>
               <FontAwesomeIcon icon={faBuilding} size="2x" className="text-purple-500 mb-2" />
-              <h3 className="font-semibold">Connect with Top Companies</h3>
-              <p className="text-sm text-gray-500">Find opportunities at leading and innovative organizations.</p>
+              <h3 className="font-semibold text-base-content">Connect with Top Companies</h3>
+              <p className="text-sm text-base-content/60">Find opportunities at leading and innovative organizations.</p>
             </div>
           </div>
         </div>
