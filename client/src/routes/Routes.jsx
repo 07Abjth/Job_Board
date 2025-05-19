@@ -31,6 +31,9 @@ import { PaymentSuccessPage } from "../payment/PaymentSuccessPage";
 import { ManagePostedJobs } from "../pages/employer/ManagePostedJobs";
 import { SettingsPage } from "../pages/shared/SettingsPage";
 import { EmployerHomePage } from "../pages/employer/EmployerHomePage";
+import ViewAllJobs from "../pages/user/premiumContents/ViewAllJobs";
+ 
+
 
 export const router = createBrowserRouter([
   // USER Layout
@@ -61,6 +64,7 @@ export const router = createBrowserRouter([
           { path: "user/applied-jobs", element: <AppliedJobs /> },
           { path: "user/payment/cancel", element: <PaymentCancelPage /> },
           { path: "user/payment/success", element: <PaymentSuccessPage /> },
+          { path: "user/view-all-jobs", element: <ViewAllJobs /> },
         ],
       },
     ],

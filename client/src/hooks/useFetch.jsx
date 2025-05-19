@@ -1,4 +1,4 @@
- import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { axiosInstance } from '../config/axiosInstance';
 
 const useFetch = (url) => {
@@ -6,34 +6,32 @@ const useFetch = (url) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const res = await axiosInstance.get(url);
+      setData(res.data);
+      setError(null);
+    } catch (err) {
+      if (err.name !== 'CanceledError') {
+        setError(err);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    // Check if the URL is valid or different before fetching
-    if (!url) return;  // Exit early if there's no URL
+    if (!url) return;
 
     const controller = new AbortController();
 
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const res = await axiosInstance.get(url, { signal: controller.signal });
-        setData(res.data);
-      } catch (err) {
-        if (err.name !== 'CanceledError') {
-          setError(err);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-    
     fetchData();
-    
+
     return () => controller.abort();
+  }, [url]);
 
-    
-  }, [url]); // Only re-run when `url` changes
-
-  return [data, loading, error];
+  return [data, loading, error, fetchData];  
 };
 
 export default useFetch;

@@ -80,7 +80,7 @@ export const loginUser = async (req, res) => {
 
     
     
-    // This will set the "jwt" cookie for you
+    // This will set the "jwt" cookie  
     const token = generateToken(res, user);
     
     // No need to manually set cookies here

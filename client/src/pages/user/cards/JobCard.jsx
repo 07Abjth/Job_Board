@@ -8,7 +8,7 @@ import {
   faMoneyBillWave,
   faBriefcase,
 } from '@fortawesome/free-solid-svg-icons';
-import { Bookmark } from '../BookMarks'; // Adjust path if needed
+import { Bookmark } from '../BookMarks';  
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);

@@ -5,8 +5,9 @@ import { dbConnect } from "./config/dbConfig.js";
 import apiRouter from "./routes/index.js";
 import cookieParser from "cookie-parser";
 import http from "http";
-import { Server as SocketIOServer } from "socket.io"; // renamed to avoid confusion
-import { initializeSocket } from "./config/socket.config.js";  
+import { Server as SocketIOServer } from "socket.io";
+import { initializeSocket } from "./config/socket.config.js";
+import bodyParser from "body-parser"; // Needed for Stripe webhook
 
 dotenv.config();
 
@@ -25,25 +26,48 @@ const corsOptions = {
   maxAge: 86400
 };
 app.use(cors(corsOptions));
+
+// 🔥 STRIPE WEBHOOK (must come before express.json)
+app.post(
+  "/api/v1/payment/webhook",
+  bodyParser.raw({ type: "application/json" }),
+  async (req, res) => {
+    try {
+      const { webhookHandler } = await import(
+        "./controllers/payment/webhookController.js"
+      );
+      webhookHandler(req, res);
+    } catch (err) {
+      console.error("❌ Error in Stripe webhook handler:", err);
+      res.status(500).send("Internal Server Error");
+    }
+  }
+);
+
+// Other middlewares
 app.use(express.json());
 app.use(cookieParser());
 
-// Required for cross-origin cookies
+// Set CORS headers for credentials manually (if needed for cookies)
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
   next();
 });
 
+// Connect to DB
 dbConnect();
 
+// Routes
 app.use("/api", apiRouter);
+
+// Health check
 app.get("/", (req, res) => res.send("API is running..."));
 
-// Create raw HTTP server
+// Create HTTP server
 const server = http.createServer(app);
 
-// Initialize Socket.IO on top of the HTTP server
+// Initialize Socket.IO
 const io = new SocketIOServer(server, {
   cors: {
     origin: corsOptions.origin,
@@ -51,7 +75,6 @@ const io = new SocketIOServer(server, {
   }
 });
 
-// Pass io to your socket handler
 initializeSocket(io);
 
 // Start server

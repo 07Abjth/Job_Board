@@ -7,10 +7,15 @@ import { isEqual } from "lodash";
 import { saveUserData } from "../../redux/features/userSlice";
 import { saveEmployerData } from "../../redux/features/employerSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { useSubscription } from "../../hooks/useSubscription";
+import premiumIcon from '../../assets/premium-icon.png'
 
 export const ProfilePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { isSubscribed, checkingSubscription } = useSubscription();  
+
 
   // Get user and employer from Redux store
   const { user: reduxUser } = useSelector((state) => state.user);
@@ -33,7 +38,7 @@ export const ProfilePage = () => {
   };
 
   // Fetch profile
-  const [profile, isLoading, error] = useFetch(apiEndpoints.profile_api);
+  const [profile, isLoading, error, refetch] = useFetch(apiEndpoints.profile_api);
 
   const userData = profile?.user || profile?.employer || profile || {};
 
@@ -136,7 +141,7 @@ export const ProfilePage = () => {
       } else {
         dispatch(saveUserData(updated));
       }
-
+await refetch();
       setEditMode(false);
     } catch (err) {
       console.error("Update failed:", err);
@@ -183,15 +188,21 @@ export const ProfilePage = () => {
     <div className="min-h-screen bg-base-200 p-6">
       <div className="max-w-4xl mx-auto bg-base-100 shadow-xl rounded-xl p-8">
         <div className="flex flex-col items-center gap-4 mb-6">
-          <div className="avatar">
-            <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-              <img
-                src={profilePreview || "/default-avatar.png"}
-                alt={role === "employer" ? "Company Logo" : "Profile Picture"}
-              />
+          <div className="relative">
+            <div className="avatar">
+              <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                <img
+                  src={profilePreview || "/default-avatar.png"}
+                  alt={role === "employer" ? "Company Logo" : "Profile Picture"}
+                />
+              </div>
             </div>
+            {isSubscribed && !checkingSubscription && (
+              <div className="absolute bottom-0 right-0 bg-white rounded-full p-1 shadow-md">
+                <img src={premiumIcon} alt="Premium" className="h-5 w-5" />
+              </div>
+            )}
           </div>
-
           {editMode && (
             <div>
               <FileUploadComponent
@@ -212,7 +223,7 @@ export const ProfilePage = () => {
                 name="name"
                 value={formData.name || ""}
                 onChange={handleChange}
-                className="input input-bordered w-full"
+                className="input input-bordered w-full "
               />
             ) : (
               <p>{userData.name || "N/A"}</p>

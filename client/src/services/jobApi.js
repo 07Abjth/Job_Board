@@ -1,5 +1,4 @@
-// client/src/services/jobsApi.js
-import { axiosInstance } from '../config/axiosInstance'; // Assuming you have your axios instance configured
+ import { axiosInstance } from '../config/axiosInstance';  
 
 export const getLatestJobs = async () => {
   try {

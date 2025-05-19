@@ -9,7 +9,7 @@ import bookmarkRoutes from './bookmarkRoutes.js';
 import adminRoutes from './adminRoutes.js';
 import paymentRoutes from './paymentRoute.js';
 import subscriptionRoutes from './subscriptionRoutes.js';
-
+import messageRoutes from './messageRoutes.js';
 
  const v1Router = express.Router();
 
@@ -25,6 +25,7 @@ v1Router.use('/jobs', jobRoutes);
  v1Router.use('/bookmark', bookmarkRoutes);
  v1Router.use('/payment', paymentRoutes);
  v1Router.use('/subscription', subscriptionRoutes);
+ v1Router.use('/messages', messageRoutes);
 
 
 

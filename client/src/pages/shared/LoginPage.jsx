@@ -1,11 +1,13 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
-
 import { toast } from "react-hot-toast";
 import { axiosInstance } from "../../config/axiosInstance";
 import { useDispatch } from "react-redux";
+
+// Import Redux actions for user and employer
 import { saveUserData } from "../../redux/features/userSlice";
+import { saveEmployerData } from "../../redux/features/employerSlice";
 
 export const LoginPage = ({ role = "user" }) => {
   const {
@@ -14,9 +16,9 @@ export const LoginPage = ({ role = "user" }) => {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
-  const dispatch = useDispatch(); // Initialize dispatch here
+  const dispatch = useDispatch();
 
-  // ✅ User roles setup
+  // 🔧 Role-based configuration
   const user = {
     role: "user",
     login_api: "/user/login",
@@ -39,38 +41,29 @@ export const LoginPage = ({ role = "user" }) => {
     user.profile_route = "/admin/profile";
     user.home_route = "/admin/dashboard";
     user.signup_route = "/admin/signup";
-    
   }
 
   console.log("====USER ROLE CONFIG====", user);
 
-  // ✅ Login function
+  // 🚀 Submit Handler
   const onSubmit = async (data) => {
     try {
       console.log("📨 Login Data:", data);
-      console.log("🔗 Login API URL:", user.login_api);
-      
       const response = await axiosInstance.post(user.login_api, data);
-      
       console.log("✅ Login Success Response:", response.data);
-      
-      // Dispatch user data to Redux store directly after login success
-      dispatch(saveUserData(response.data));
-      
+
+      // 📦 Role-based Redux dispatch
+      if (user.role === "user") {
+        dispatch(saveUserData(response.data));
+      } else if (user.role === "employer") {
+        dispatch(saveEmployerData(response.data));
+      }
+      // Add admin dispatch if needed later
+
       toast.success("Login successful");
       navigate(user.home_route);
     } catch (error) {
       console.error("❌ Login Error:", error);
-
-      if (error.response) {
-        console.error("📦 Backend responded with error:", error.response.data);
-        console.error("📊 Status code:", error.response.status);
-      } else if (error.request) {
-        console.error("📭 No response received from backend", error.request);
-      } else {
-        console.error("🛠️ Axios error message:", error.message);
-      }
-
       toast.error(error.response?.data?.message || "Login failed");
     }
   };

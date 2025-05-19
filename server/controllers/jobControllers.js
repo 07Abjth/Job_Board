@@ -126,17 +126,35 @@ export const deleteJob = async (req, res) => {
 
 // getLatestJobs
 export const getLatestJobs = async (req, res) => {
-  console.log('🔥 getLatestJobs called');
-
   try {
+    const limit = parseInt(req.query.limit) || 6; // Default to 6 if not specified
+    
     const latestJobs = await Job.find({})
-      .sort({ createdAt: -1 }) // Sort by the 'createdAt' field in descending order (newest first)
-      .limit(10); // Limit the number of latest jobs to retrieve (adjust as needed)
-      console.log('🔥 getLatestJobs called');
-
+      .sort({ createdAt: -1 })
+      .limit(limit);
+    
     res.status(200).json({ success: true, jobs: latestJobs });
   } catch (error) {
     console.error('Error fetching latest jobs:', error);
     res.status(500).json({ success: false, error: 'Failed to fetch latest jobs' });
+  }
+};
+
+
+export const getPremiumJobs = async (req, res) => {
+  try {
+    // Fetch all jobs
+    const jobs = await Job.find({});
+
+    return res.status(200).json({
+      success: true,
+      data: jobs,
+    });
+  } catch (error) {
+    console.error('Error fetching jobs:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to fetch jobs',
+    });
   }
 };
