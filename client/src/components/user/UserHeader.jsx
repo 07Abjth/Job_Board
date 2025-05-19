@@ -17,18 +17,26 @@ export const UserHeader = () => {
 
   const { isSubscribed, checkingSubscription } = useSubscription();  
 
-  const handleLogout = async () => {
-    try {
-      await axiosInstance.post("/user/logout");
-      localStorage.removeItem("userToken");
-      dispatch(clearUserData());
-      toast.success("Logged out successfully");
-      navigate("/");
-      window.location.reload();
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
+const handleLogout = async () => {
+  try {
+    await axiosInstance.post("/user/logout");
+    
+    localStorage.removeItem("userToken");  // Clear user token
+    localStorage.removeItem("theme");      // Clear theme preference
+    
+    document.documentElement.setAttribute("data-theme", "light");  // Reset theme immediately
+    
+    dispatch(clearUserData());  // Clear user data from state
+    
+    toast.success("Logged out successfully");
+    
+    navigate("/");
+    
+   } catch (error) {
+    console.error("Logout failed:", error);
+    toast.error("Logout failed. Please try again.");
+  }
+};
 
   return (
     <header className="bg-base-100 text-base-content shadow-md">
@@ -55,10 +63,17 @@ export const UserHeader = () => {
           <div className="flex items-center space-x-2 md:space-x-4">
             <DarkMode />
            <section>
-             {isSubscribed && !checkingSubscription && (
-                <img src={premiumIcon} alt="Premium" className="h-5 w-5 md:h-6 md:w-6" />
-              )}
-           </section>
+  {isSubscribed && !checkingSubscription && (
+    <div className="flex flex-col items-center space-y-1">
+      <span className="text-sm text-gray-600">Premium User</span>
+      <img
+        src={premiumIcon}
+        alt="Premium"
+        className="h-5 w-5 md:h-6 md:w-6"
+      />
+    </div>
+  )}
+</section>
             {isUserAuth && (
               <div className="dropdown dropdown-end">
                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
