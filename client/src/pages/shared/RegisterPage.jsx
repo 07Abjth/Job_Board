@@ -89,85 +89,87 @@ export const RegisterPage = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+    <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md  mt-16">
       <h2 className="text-2xl font-bold mb-6">
         {isEmployerRoute ? "Register as Employer" : "Register to JobBoard"}
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Full Name</label>
-          <input
-            type="text"
-            name="name"
-            required
-            value={formData.name}
-            onChange={handleChange}
-            className="mt-1 block w-full px-3 py-2 border rounded-md"
-          />
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Full Name</label>
+            <input
+              type="text"
+              name="name"
+              required
+              value={formData.name}
+              onChange={handleChange}
+              className="mt-1 block w-full px-3 py-2 border rounded-md"
+            />
+          </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Email Address</label>
-          <input
-            type="email"
-            name="email"
-            required
-            value={formData.email}
-            onChange={handleChange}
-            className="mt-1 block w-full px-3 py-2 border rounded-md"
-          />
-        </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Email Address</label>
+            <input
+              type="email"
+              name="email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              className="mt-1 block w-full px-3 py-2 border rounded-md"
+            />
+          </div>
 
-        {isEmployerRoute && (
-          <>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Company Name</label>
-              <input
-                type="text"
-                name="companyName"
-                required
-                value={formData.companyName}
-                onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border rounded-md"
-              />
-            </div>
+          {isEmployerRoute && (
+            <>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Company Name</label>
+                <input
+                  type="text"
+                  name="companyName"
+                  required
+                  value={formData.companyName}
+                  onChange={handleChange}
+                  className="mt-1 block w-full px-3 py-2 border rounded-md"
+                />
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Company Website</label>
-              <input
-                type="url"
-                name="companyWebsite"
-                value={formData.companyWebsite}
-                onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border rounded-md"
-              />
-            </div>
-          </>
-        )}
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Company Website</label>
+                <input
+                  type="url"
+                  name="companyWebsite"
+                  value={formData.companyWebsite}
+                  onChange={handleChange}
+                  className="mt-1 block w-full px-3 py-2 border rounded-md"
+                />
+              </div>
+            </>
+          )}
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Password</label>
-          <input
-            type="password"
-            name="password"
-            required
-            value={formData.password}
-            onChange={handleChange}
-            className="mt-1 block w-full px-3 py-2 border rounded-md"
-          />
-        </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Password</label>
+            <input
+              type="password"
+              name="password"
+              required
+              value={formData.password}
+              onChange={handleChange}
+              className="mt-1 block w-full px-3 py-2 border rounded-md"
+            />
+          </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            required
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            className="mt-1 block w-full px-3 py-2 border rounded-md"
-          />
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              required
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className="mt-1 block w-full px-3 py-2 border rounded-md"
+            />
+          </div>
         </div>
 
         <div>
@@ -191,15 +193,14 @@ export const RegisterPage = () => {
         </button>
 
         <p className="text-sm text-gray-600">
-  Already have an account?{" "}
-  <Link
-    to={isEmployerRoute ? "/employer/login" : "/login"}
-    className="text-blue-500 hover:text-blue-600"
-  >
-    Log in
-  </Link>
-</p>
-
+          Already have an account?{" "}
+          <Link
+            to={isEmployerRoute ? "/employer/login" : "/login"}
+            className="text-blue-500 hover:text-blue-600"
+          >
+            Log in
+          </Link>
+        </p>
       </form>
     </div>
   );

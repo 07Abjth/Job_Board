@@ -56,8 +56,8 @@ export const PostJob = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-10 bg-white shadow-lg rounded-xl">
-      <h1 className="text-3xl font-bold text-gray-800 mb-8 border-b pb-4"> Post a New Job</h1>
+    <div className="max-w-5xl mx-auto px-6 py-10  shadow-lg rounded-xl">
+      <h1 className="text-3xl font-bold text-base-content mb-8 border-b pb-4"> Post a New Job</h1>
       <form onSubmit={handleSubmit} className="space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <InputField label="Job Title" value={title} onChange={(e) => setTitle(e.target.value)} required />

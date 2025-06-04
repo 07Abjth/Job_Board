@@ -59,14 +59,14 @@ export const EmployerLayout = () => {
   const showSidebar = isEmployerAuth && !isPublicRoute;
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div className="min-h-screen  dark:bg-gray-900">
       {/* Header */}
       {showSidebar ? <EmployerHeader /> : <PublicHeader />}
 
-      <div className="flex flex-col md:flex-row min-h-screen">
+      <div className="flex flex-col md:flex-row min-h-screen  ">
         {/* Sidebar */}
         {showSidebar && (
-          <aside className="w-full md:w-64 bg-white dark:bg-gray-800 shadow-md">
+          <aside className="w-full md:w-64  dark:bg-gray-800 shadow-md">
             <SideBar />
           </aside>
         )}

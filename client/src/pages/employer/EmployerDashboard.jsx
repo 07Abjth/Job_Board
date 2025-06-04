@@ -31,117 +31,18 @@ export const EmployerDashboard = () => {
   // const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar
-      <div className={`bg-gray-900 text-white ${sidebarOpen ? 'w-64' : 'w-20'} transition-all duration-300 flex flex-col`}>
-        <div className="p-4 flex items-center justify-between">
-          <h2 className={`font-bold text-xl ${!sidebarOpen && 'hidden'}`}>JobConnect</h2>
-          <button onClick={() => setSidebarOpen(!sidebarOpen)} className="bg-gray-800 p-2 rounded-lg">
-            <ChevronDown className={`h-5 w-5 transition-transform ${!sidebarOpen && 'rotate-180'}`} />
-          </button>
-        </div>
-        <div className="flex-1">
-          <nav className="mt-8">
-            <div className="px-4 pb-4">
-              <div className="relative">
-                <input 
-                  type="text" 
-                  placeholder="Search..." 
-                  className={`w-full py-2 pl-10 pr-4 rounded-lg bg-gray-800 text-white ${!sidebarOpen && 'hidden'}`} 
-                />
-                <div className={`absolute left-3 top-2 ${sidebarOpen ? '' : 'relative mx-auto my-4'}`}>
-                  <Search className="h-5 w-5 text-gray-400" />
-                </div>
-              </div>
-            </div>
-            <ul className="space-y-2 font-medium">
-              <li>
-                <a href="#" className="flex items-center p-4 text-white bg-primary rounded-lg mx-2">
-                  <PieChart className="h-5 w-5" />
-                  <span className={`ml-3 ${!sidebarOpen && 'hidden'}`}>Dashboard</span>
-                </a>
-              </li>
-              <li>
-                <a href="#" className="flex items-center p-4 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg mx-2">
-                  <Briefcase className="h-5 w-5" />
-                  <span className={`ml-3 ${!sidebarOpen && 'hidden'}`}>Job Postings</span>
-                </a>
-              </li>
-              <li>
-                <a href="#" className="flex items-center p-4 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg mx-2">
-                  <Users className="h-5 w-5" />
-                  <span className={`ml-3 ${!sidebarOpen && 'hidden'}`}>Candidates</span>
-                </a>
-              </li>
-              <li>
-                <a href="#" className="flex items-center p-4 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg mx-2">
-                  <MessageSquare className="h-5 w-5" />
-                  <span className={`ml-3 ${!sidebarOpen && 'hidden'}`}>Messages</span>
-                </a>
-              </li>
-              <li>
-                <a href="#" className="flex items-center p-4 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg mx-2">
-                  <FileText className="h-5 w-5" />
-                  <span className={`ml-3 ${!sidebarOpen && 'hidden'}`}>Reports</span>
-                </a>
-              </li>
-              <li>
-                <a href="#" className="flex items-center p-4 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg mx-2">
-                  <Settings className="h-5 w-5" />
-                  <span className={`ml-3 ${!sidebarOpen && 'hidden'}`}>Settings</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-        <div className="p-4 mt-auto">
-          <a href="#" className="flex items-center p-2 text-gray-400 hover:text-white rounded-lg">
-            <LogOut className="h-5 w-5" />
-            <span className={`ml-3 ${!sidebarOpen && 'hidden'}`}>Logout</span>
-          </a>
-        </div>
-      </div> */}
+    <div className="flex min-h-screen ">
+     
 
       {/* Main Content */}
       <div className="flex-1">
-        {/* Header
-        <header className="bg-white shadow-sm">
-          <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between h-16">
-              <div className="flex items-center">
-                <h1 className="text-2xl font-bold text-gray-900">Employer Dashboard</h1>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="relative">
-                  <button className="btn btn-ghost btn-circle">
-                    <div className="indicator">
-                      <Bell className="h-6 w-6" />
-                      <span className="badge badge-sm badge-primary indicator-item">3</span>
-                    </div>
-                  </button>
-                </div>
-                <div className="dropdown dropdown-end">
-                  <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                    <div className="w-10 rounded-full">
-                      <img alt="Avatar" src="/api/placeholder/40/40" />
-                    </div>
-                  </div>
-                  <ul tabIndex={0} className="mt-3 z-10 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
-                    <li><a>Profile</a></li>
-                    <li><a>Settings</a></li>
-                    <li><a>Logout</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </header> */}
+        
 
          {/* Dashboard Content */}
                 <main className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
                   {/* Stats Cards */}
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div className="card bg-white shadow-sm">
+                    <div className="card  shadow-sm">
                       <div className="card-body">
                         <div className="flex items-center justify-between">
                           <div>
@@ -156,7 +57,7 @@ export const EmployerDashboard = () => {
                       </div>
                     </div>
                     
-                    <div className="card bg-white shadow-sm">
+                    <div className="card  shadow-sm">
                       <div className="card-body">
                         <div className="flex items-center justify-between">
                           <div>
@@ -171,7 +72,7 @@ export const EmployerDashboard = () => {
                       </div>
                     </div>
                     
-                    <div className="card bg-white shadow-sm">
+                    <div className="card  shadow-sm">
                       <div className="card-body">
                         <div className="flex items-center justify-between">
                           <div>
@@ -186,7 +87,7 @@ export const EmployerDashboard = () => {
                       </div>
                     </div>
                     
-                    <div className="card bg-white shadow-sm">
+                    <div className="card  shadow-sm">
                       <div className="card-body">
                         <div className="flex items-center justify-between">
                           <div>
@@ -204,7 +105,7 @@ export const EmployerDashboard = () => {
         
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Applications Chart */}
-                    <div className="card bg-white shadow-sm lg:col-span-2">
+                    <div className="card  shadow-sm lg:col-span-2">
                       <div className="card-body">
                         <div className="flex justify-between items-center mb-6">
                           <h3 className="text-lg font-bold">Application Trends</h3>
@@ -234,7 +135,7 @@ export const EmployerDashboard = () => {
                     </div>
         
                     {/* Top Candidates */}
-                    <div className="card bg-white shadow-sm">
+                    <div className="card  shadow-sm">
                       <div className="card-body">
                         <div className="flex justify-between items-center mb-6">
                           <h3 className="text-lg font-bold">Top Candidates</h3>

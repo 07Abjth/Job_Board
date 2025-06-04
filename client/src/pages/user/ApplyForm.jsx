@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../config/axiosInstance';
+import { toast } from 'react-hot-toast';
+
+
 
 export const ApplyForm = () => {
   const { id } = useParams(); // job id
@@ -74,12 +77,13 @@ export const ApplyForm = () => {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
-      if (response.data.success) {
-        alert('Application submitted successfully!');
-        navigate('/');
-      } else {
-        setError(response.data.message || 'Failed to submit application. Please try again.');
-      }
+     if (response.data.success) {
+  toast.success('Application submitted successfully!');
+  navigate('/');
+} else {
+  setError(response.data.message || 'Failed to submit application. Please try again.');
+}
+
     } catch (error) {
       console.error('Error submitting application:', error);
       const errorMessage = error.response?.data?.message || 'An error occurred. Please try again later.';

@@ -18,7 +18,7 @@ export const SideBar = () => {
     <div
       className={`${
         sidebarOpen ? "w-64" : "w-20"
-      } bg-white border-r border-gray-200 shadow-sm transition-all duration-300 flex flex-col min-h-screen`}
+      }  border-r  border-gray-200 shadow-sm transition-all duration-300 flex flex-col min-h-screen`}
     >
       {/* Logo & Toggle */}
       <div className="flex items-center justify-between px-4 py-4 border-b">
@@ -43,8 +43,8 @@ export const SideBar = () => {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-2 mt-4">
-        <ul className="space-y-2 text-gray-700 text-sm">
+      <nav className="flex-1  px-2 mt-4 ">
+        <ul className="space-y-2 text-base-content text-sm">
           <SidebarItem
             to="/employer/dashboard"
             icon={<PieChart className="h-5 w-5" />}
@@ -75,12 +75,12 @@ export const SideBar = () => {
             label="Company Profile"
             open={sidebarOpen}
           />
-          <SidebarItem
+          {/* <SidebarItem
             to="/employer/settings"
             icon={<Settings className="h-5 w-5" />}
             label="Settings"
             open={sidebarOpen}
-          />
+          /> */}
         </ul>
       </nav>
 

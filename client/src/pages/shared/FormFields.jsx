@@ -1,8 +1,8 @@
 import React from "react";
 
 export const InputField = ({ label, type = 'text', value, onChange, required = false }) => (
-  <div className="flex flex-col gap-1">
-    <label className="text-sm font-medium text-gray-700">{label}</label>
+  <div className="flex flex-col gap-1 ">
+    <label className="text-sm font-medium text-base-content">{label}</label>
     <input
       type={type}
       value={value}
@@ -15,7 +15,7 @@ export const InputField = ({ label, type = 'text', value, onChange, required = f
 
 export const TextAreaField = ({ label, value, onChange, required = false }) => (
   <div className="flex flex-col gap-1">
-    <label className="text-sm font-medium text-gray-700">{label}</label>
+    <label className="text-sm font-medium text-base-content">{label}</label>
     <textarea
       value={value}
       onChange={onChange}

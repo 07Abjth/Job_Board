@@ -69,7 +69,7 @@ export const LoginPage = ({ role = "user" }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+    <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md mt-16 ">
       <h2 className="text-2xl font-bold mb-6">Log In</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Email Input */}

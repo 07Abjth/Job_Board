@@ -50,11 +50,11 @@ export const ManagePostedJobs = () => {
           {jobs.map((job) => (
             <div
               key={job._id}
-              className="border rounded-lg shadow-md p-4 transition-all duration-300 bg-white hover:shadow-xl cursor-pointer"
+              className="border rounded-lg shadow-md p-4 transition-all duration-300  hover:shadow-xl cursor-pointer"
               onClick={() => toggleExpand(job._id)}
             >
               {/* COLLAPSED VIEW */}
-              <div className="flex justify-between items-center">
+              <div className=" flex justify-between items-center">
                 <div>
                   <h3 className="text-lg font-semibold text-blue-700">{job.title}</h3>
                   <p className="text-gray-600">{job.company} | {job.location}</p>
@@ -66,7 +66,7 @@ export const ManagePostedJobs = () => {
 
               {/* EXPANDED DETAILS */}
               {expandedJobId === job._id && (
-                <div className="mt-4 text-sm text-gray-700 space-y-1">
+                <div className="mt-4 text-sm text-base-content space-y-1">
                   <p><strong>Description:</strong> {job.description}</p>
                   <p><strong>Category:</strong> {job.category}</p>
                   <p><strong>Salary:</strong> ₹{job.salary.toLocaleString()}</p>
