@@ -7,7 +7,7 @@ export const SettingsPage = () => {
   return (
     <div className="min-h-screen  text-white text-sm dark:bg-gray-900">
       <div className="max-w-4xl mx-auto pt-8 pb-12 px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold text-gray-600 dark:text-white mb-6 ">
+        <h1 className="text-3xl font-bold text-base-content mb-6 ">
           Account Settings
         </h1>
 
@@ -26,7 +26,7 @@ export const SettingsPage = () => {
                 className={`pb-4 px-1 border-b-2 font-medium text-sm ${
                   activeTab === tab.id
                     ? "border-blue-500 text-blue-600 dark:text-blue-400"
-                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
+                    : "border-transparent hover:text-gray-700 hover:border-gray-300 text-base-content"
                 }`}
               >
                 <div className="flex items-center">
@@ -39,15 +39,15 @@ export const SettingsPage = () => {
         </div>
 
         {/* Content Area */}
-        <div className=" text-gray-500 text-sm dark:bg-gray-800 shadow-lg rounded-lg">
+        <div className=" text-base-content shadow-lg rounded-lg">
           {/* Profile Tab */}
           {activeTab === "profile" && (
             <div className="p-6 space-y-6">
-              <h2 className="text-xl font-semibold text-gray-500 dark:text-white">Profile Information</h2>
+              <h2 className="text-xl font-semibold text-base-content">Profile Information</h2>
               <div className="flex flex-col sm:flex-row sm:space-x-6">
                 <div className="sm:w-1/3 flex justify-center sm:justify-start mb-6 sm:mb-0">
                   <div className="relative">
-                    <div className="h-24 w-24 rounded-full  dark:bg-gray-600 flex items-center justify-center  text-white text-sm dark:text-gray-300">
+                    <div className="h-24 w-24 rounded-full  dark:bg-gray-600 flex items-center justify-center  text-base-content text-sm dark:text-gray-300">
                       <User size={48} />
                     </div>
                     <button className="absolute bottom-0 right-0 bg-blue-500 hover:bg-blue-600 text-white p-1 rounded-full transition-colors">
@@ -71,14 +71,14 @@ export const SettingsPage = () => {
                           id="bio"
                           placeholder="Tell us about yourself"
                           rows={3}
-                          className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm  dark:bg-gray-700 text-gray-500 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                          className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm  dark:bg-gray-700  text-base-content placeholder-gray-500 dark:placeholder-gray-400"
                         />
                       ) : (
                         <input
                           type={label === "Email Address" ? "email" : "text"}
                           id={label.toLowerCase().replace(" ", "-")}
                           placeholder={`Enter your ${label.toLowerCase()}`}
-                          className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm  dark:bg-gray-700  text-gray-500  dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                          className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm  dark:bg-gray-700  text-base-content placeholder-gray-500 dark:placeholder-gray-400"
                         />
                       )}
                     </div>
@@ -98,7 +98,7 @@ export const SettingsPage = () => {
           {/* Security Tab */}
           {activeTab === "security" && (
             <div className="p-6 space-y-6">
-              <h2 className="text-xl font-semibold text-gray-600 dark:text-white">Security Settings</h2>
+              <h2 className="text-xl font-semibold text-base-content">Security Settings</h2>
 
               {[
                 { id: "current-password", label: "Current Password" },
@@ -120,13 +120,13 @@ export const SettingsPage = () => {
 
               {/* Two Factor Auth */}
               <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                <h3 className="text-md font-medium text-gray-600 dark:text-white mb-3">Two-Factor Authentication</h3>
+                <h3 className="text-md font-medium text-base-content mb-3">Two-Factor Authentication</h3>
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-700 dark:text-gray-300">Add extra security to your account</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">A verification code will be sent during login</p>
                   </div>
-                  <label className="inline-flex items-center cursor-pointer">
+                  <label className="inline-flex items-center cursor-pointer border-2 border-gray-300">
                     <input type="checkbox" className="sr-only peer" />
                     <div className="relative w-11 h-6  text-white text-sm rounded-full peer peer-checked:bg-blue-600 dark:bg-gray-600 transition-all">
                       <span className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-all peer-checked:translate-x-5" />
@@ -135,7 +135,7 @@ export const SettingsPage = () => {
                 </div>
               </div>
               
-              <div className="flex justify-end pt-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex justify-end pt-4 border-t border-gray-200 ">
                 <button className="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors">
                   <Save className="mr-2 h-4 w-4" />
                   Update Security
@@ -147,7 +147,7 @@ export const SettingsPage = () => {
           {/* Notifications Tab */}
           {activeTab === "notifications" && (
             <div className="p-6 space-y-6">
-              <h2 className="text-xl font-semibold text-gray-600 dark:text-white">Notification Preferences</h2>
+              <h2 className="text-xl font-semibold text-base-content">Notification Preferences</h2>
               
               <div className="space-y-4">
                 {[
@@ -170,7 +170,7 @@ export const SettingsPage = () => {
               </div>
               
               <div className="flex justify-end pt-4 border-t border-gray-200 dark:border-gray-700">
-                <button className="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-gray-600 text-sm font-medium rounded-md transition-colors">
+                <button className="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors">
                   <Save className="mr-2 h-4 w-4" />
                   Save Preferences
                 </button>
@@ -181,7 +181,7 @@ export const SettingsPage = () => {
           {/* Preferences Tab */}
           {activeTab === "preferences" && (
             <div className="p-6 space-y-6">
-              <h2 className="text-xl font-semibold text-gray-600 dark:text-white">Display Preferences</h2>
+              <h2 className="text-xl font-semibold text-base-content">Display Preferences</h2>
               <div className="space-y-4">
                 <div>
                   <label htmlFor="language" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -228,7 +228,7 @@ export const SettingsPage = () => {
               </div>
               
               <div className="flex justify-end pt-4 border-t border-gray-200 dark:border-gray-700">
-                <button className="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-gray-400 text-sm font-medium rounded-md transition-colors">
+                <button className="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors">
                   <Save className="mr-2 h-4 w-4" />
                   Save Preferences
                 </button>
