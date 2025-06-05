@@ -54,11 +54,7 @@ export const deleteUser = async (req, res) => {
 
 
 
-// // ✅ Check User Authentication
-// export const checkAdmin = async (req, res) => {
-//     return res.status(200).json({ success: true, user: req.user });
-//   };
-
+ 
 
   export const adminLogOut = (req, res) => {
     try {
