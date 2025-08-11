@@ -1,4 +1,8 @@
-@import "tailwindcss";
+:root {
+  color-scheme: light !important;
+}
 
-@plugin "daisyui"
-
+body {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}

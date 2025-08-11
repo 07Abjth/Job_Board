@@ -12,7 +12,7 @@ const authMiddleware = (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET, { algorithms: ["HS256"] });
     
-    console.log("✅ Decoded payload:", decoded);
+    console.log(" Decoded payload:", decoded);
     req.user = decoded;
     next();
   } catch (error) {

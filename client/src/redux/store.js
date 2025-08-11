@@ -5,6 +5,7 @@ import { combineReducers } from 'redux'
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
 import userReducer from './features/userSlice'
 import employerReducer from './features/employerSlice'
+import adminReducer from './features/adminSlice'
 
 const persistConfig = {
   key: 'root',
@@ -14,6 +15,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   user: userReducer,
   employer: employerReducer,
+  admin: adminReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
